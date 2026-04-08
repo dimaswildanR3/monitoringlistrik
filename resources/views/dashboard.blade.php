@@ -8,70 +8,98 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        body {
-            font-family: Arial;
-            background: #f4f6f9;
-            margin: 0;
+    body {
+        font-family: Arial;
+        background: #f4f6f9;
+        margin: 0;
+    }
+
+    .header {
+        background: #2c3e50;
+        padding: 15px 20px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .menu a {
+        color: white;
+        margin-left: 15px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .box {
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        overflow-x: auto; /* agar tabel bisa scroll horizontal */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px; /* agar tabel scroll jika layar sempit */
+    }
+
+    th {
+        background: #34495e;
+        color: white;
+        padding: 8px;
+    }
+
+    td {
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+    }
+
+    h2, h3 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    /* Flex container untuk dua grafik */
+    .charts-row {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap; /* agar responsive */
+    }
+
+    .chart-box {
+        flex: 1;
+        min-width: 300px; /* supaya tidak terlalu kecil di mobile */
+        height: 300px;    /* sedikit lebih kecil agar pas di HP */
+    }
+
+    @media (max-width: 768px) {
+        .charts-row {
+            flex-direction: column; /* grafik stack di HP */
         }
 
         .header {
-            background: #2c3e50;
-            padding: 15px 30px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .menu a {
-            color: white;
-            margin-left: 20px;
-            text-decoration: none;
+            margin-left: 0;
+            margin-top: 5px;
         }
 
         .container {
-            padding: 30px;
+            padding: 15px;
         }
-
-        .box {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #34495e;
-            color: white;
-            padding: 10px;
-        }
-
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            text-align: center;
-        }
-
-        h2 {
-            margin-bottom: 15px;
-        }
-
-        /* Flex container untuk dua grafik */
-        .charts-row {
-            display: flex;
-            gap: 20px;
-        }
-
-        .chart-box {
-            flex: 1;
-            height: 400px;
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 
