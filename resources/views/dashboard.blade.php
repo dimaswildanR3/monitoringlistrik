@@ -69,8 +69,9 @@
 
     /* Flex container untuk dua grafik */
     .charts-row {
-        display: flex;
-        gap: 15px;
+        display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
         flex-wrap: wrap; /* agar responsive */
     }
 
@@ -80,6 +81,11 @@
         height: 300px;    /* sedikit lebih kecil agar pas di HP */
     }
 
+    .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
     @media (max-width: 768px) {
         .charts-row {
             flex-direction: column; /* grafik stack di HP */
@@ -117,32 +123,35 @@
     <h2>📊 Grafik Monitoring</h2>
 
     @php
-        $labels = [];
-        $vmean = [];
-        $imean = [];
+    $labels = [];
+    $vmean = [];
+    $imean = [];
+    $power = [];
+    $energy = [];
+    $thdi = [];
+$unb = [];
+$dev = [];
+$pf = [];
 
-        foreach($data as $d){
-            // X-axis = tanggal
-            $labels[] = \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y');
-            $vmean[] = (float)$d->vmean;
-            $imean[] = (float)$d->imean;
-        }
-    @endphp
+    foreach($data as $d){
+        $labels[] = \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i');
+        $vmean[] = (float)$d->vmean;
+        $imean[] = (float)$d->imean;
+        $power[] = (float)$d->pw;
+        $energy[] = (float)$d->ener;
+        $thdv[] = (float)($d->thdv ?? 0);
+    $thdi[] = (float)($d->thdi ?? 0);
+    $unb[] = (float)$d->unbalance;
+    $dev[] = (float)$d->deviasi;
+    $pf[] = (float)$d->pf;
+    }
 
-    <!-- GRAFIK DUA KANVAS SEBELAH-SEBELAH -->
-    <div class="charts-row">
-        <!-- Grafik V Mean -->
-        <div class="box chart-box">
-            <h3>Voltage (V Mean)</h3>
-            <canvas id="chartVoltage"></canvas>
-        </div>
 
-        <!-- Grafik I Mean -->
-        <div class="box chart-box">
-            <h3>Current (I Mean)</h3>
-            <canvas id="chartCurrent"></canvas>
-        </div>
-    </div>
+
+
+@endphp
+
+ 
 
     <!-- TABLE -->
     <div class="box">
@@ -179,7 +188,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody id="tableBody">
                 @foreach($data as $d)
                 <tr>
                     <td>{{ $d->id_device }}</td>
@@ -211,8 +220,67 @@
                 @endforeach
             </tbody>
         </table>
+        <div id="pagination" style="margin-top:10px;"></div>
+    </div>
+   <!-- GRAFIK DUA KANVAS SEBELAH-SEBELAH -->
+   <div class="charts-row">
+        <!-- Grafik V Mean -->
+        <div class="box chart-box">
+            <h3>Voltage (V Mean)</h3>
+            <canvas id="chartVoltage"></canvas>
+        </div>
+
+        <!-- Grafik I Mean -->
+        <div class="box chart-box">
+            <h3>Current (I Mean)</h3>
+            <canvas id="chartCurrent"></canvas>
+        </div>
     </div>
 
+    <div class="charts-row">
+    <!-- Power -->
+    <div class="box chart-box">
+        <h3>Power (kW)</h3>
+        <canvas id="chartPower"></canvas>
+    </div>
+
+    <!-- Energy -->
+    <div class="box chart-box">
+        <h3>Energy (kWh)</h3>
+        <canvas id="chartEnergy"></canvas>
+    </div>
+</div>
+
+<div class="charts-row">
+    <div class="box chart-box">
+        <h3>THD Voltage (%)</h3>
+        <canvas id="chartTHDV"></canvas>
+    </div>
+
+    <div class="box chart-box">
+        <h3>THD Current (%)</h3>
+        <canvas id="chartTHDI"></canvas>
+    </div>
+</div>
+
+<div class="charts-row">
+    <div class="box chart-box">
+        <h3>Unbalance (%)</h3>
+        <canvas id="chartUnbalance"></canvas>
+    </div>
+
+    <div class="box chart-box">
+        <h3>Deviasi (%)</h3>
+        <canvas id="chartDeviasi"></canvas>
+    </div>
+</div>
+
+<div class="charts-row" style="justify-content:center;">
+    <div class="box chart-box" style="max-width:47%;">
+        <h3>Power Factor (PF)</h3>
+        <canvas id="chartPF"></canvas>
+    </div>
+</div>
 </div>
 
 <!-- SCRIPT GRAFIK -->
@@ -265,8 +333,177 @@ new Chart(ctxI, {
     }
 });
 
+// POWER
+const ctxP = document.getElementById('chartPower').getContext('2d');
+new Chart(ctxP, {
+    type: 'line',
+    data: {
+        labels: @json($labels),
+        datasets: [{
+            label: 'Power (kW)',
+            data: @json($power),
+            borderWidth: 2,
+            tension: 0.3,
+            fill: false
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+// ENERGY
+const ctxE = document.getElementById('chartEnergy').getContext('2d');
+new Chart(ctxE, {
+    type: 'line',
+    data: {
+        labels: @json($labels),
+        datasets: [{
+            label: 'Energy (kWh)',
+            data: @json($energy),
+            borderWidth: 2,
+            tension: 0.3,
+            fill: false
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+new Chart(document.getElementById('chartTHDV'), {
+    type: 'line',
+    data: {
+        labels: @json($labels),
+        datasets: [{
+            label: 'THDV (%)',
+            data: @json($thdv),
+            borderWidth: 2,
+            tension: 0.3
+        }]
+    }
+});
+
+new Chart(document.getElementById('chartTHDI'), {
+    type: 'line',
+    data: {
+        labels: @json($labels),
+        datasets: [{
+            label: 'THDI (%)',
+            data: @json($thdi),
+            borderWidth: 2,
+            tension: 0.3
+        }]
+    }
+});
+
+new Chart(document.getElementById('chartUnbalance'), {
+    type: 'line',
+    data: {
+        labels: @json($labels),
+        datasets: [{
+            label: 'Unbalance (%)',
+            data: @json($unb),
+            borderWidth: 2,
+            tension: 0.3
+        }]
+    }
+});
+
+new Chart(document.getElementById('chartDeviasi'), {
+    type: 'line',
+    data: {
+        labels: @json($labels),
+        datasets: [{
+            label: 'Deviasi (%)',
+            data: @json($dev),
+            borderWidth: 2,
+            tension: 0.3
+        }]
+    }
+});
+
+new Chart(document.getElementById('chartPF'), {
+    type: 'line',
+    data: {
+        labels: @json($labels),
+        datasets: [{
+            label: 'Power Factor',
+            data: @json($pf),
+            borderWidth: 2,
+            tension: 0.3
+        }]
+    }
+});
+
 // auto refresh
 setTimeout(() => { location.reload(); }, 10000);
+
+const rowsPerPage = 10;
+const table = document.getElementById("tableBody");
+const rows = Array.from(table.querySelectorAll("tr"));
+
+let currentPage = parseInt(localStorage.getItem("page")) || 1;
+function getTotalPages() {
+    return Math.ceil(rows.length / rowsPerPage);
+}
+// tampilkan data sesuai page
+function showPage(page) {
+    currentPage = page;
+    localStorage.setItem("page", page);
+
+    rows.forEach((row, index) => {
+        row.style.display =
+            (index >= (page - 1) * rowsPerPage &&
+             index < page * rowsPerPage)
+            ? ""
+            : "none";
+    });
+
+    renderPagination();
+}
+
+// render tombol pagination
+function renderPagination() {
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalPages = getTotalPages();
+
+    // PREV
+    if (currentPage > 1) {
+        const prev = document.createElement("button");
+        prev.innerText = "Prev";
+        prev.onclick = () => showPage(currentPage - 1);
+        pagination.appendChild(prev);
+    }
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+
+        if (i === currentPage) {
+            btn.style.background = "#2c3e50";
+            btn.style.color = "white";
+        }
+
+        btn.onclick = () => showPage(i);
+        pagination.appendChild(btn);
+    }
+
+    // NEXT
+    if (currentPage < totalPages) {
+        const next = document.createElement("button");
+        next.innerText = "Next";
+        next.onclick = () => showPage(currentPage + 1);
+        pagination.appendChild(next);
+    }
+}
+
+// init
+showPage(parseInt(currentPage));
 </script>
 
 </body>
