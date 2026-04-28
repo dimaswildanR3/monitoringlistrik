@@ -21,10 +21,15 @@ class LogEnergyController extends Controller
         $dev_t = abs($vtn - $avg);
         $max_dev = max($dev_r, $dev_s, $dev_t);
         $unbalance = ($avg != 0) ? ($max_dev / $avg) * 100 : 0;
-        $Vnominal = $request->v_nominal ?? 220; 
-        $deviasi = ($Vnominal != 0)
-            ? (($avg - $Vnominal) / $Vnominal) * 100
-            : 0;
+        $Vnominal = $request->v_nominal ?? 220;
+        $dev_r_pct = ($Vnominal != 0) ? (($vrn - $Vnominal) / $Vnominal) * 100 : 0;
+        $dev_s_pct = ($Vnominal != 0) ? (($vsn - $Vnominal) / $Vnominal) * 100 : 0;
+        $dev_t_pct = ($Vnominal != 0) ? (($vtn - $Vnominal) / $Vnominal) * 100 : 0;
+        $dev_r_pct = round($dev_r_pct, 2);
+        $dev_s_pct = round($dev_s_pct, 2);
+        $dev_t_pct = round($dev_t_pct, 2);
+        $deviasi = round(($dev_r_pct + $dev_s_pct + $dev_t_pct) / 3, 2);
+        $unbalance = round($unbalance, 2);
         $status_thdv = ($thdv >= 1 && $thdv <= 5) ? 1 : 0;
         $status_thdi = ($thdi >= 1 && $thdi <= 5) ? 1 : 0;
         $status_unbalance = ($unbalance <= 2) ? 1 : 0;
