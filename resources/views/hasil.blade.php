@@ -60,7 +60,7 @@
 
     <div class="menu">
         <a href="/">Dashboard</a>
-        <a href="/evaluasi">Evaluasi</a>
+        <a href="/hasil">Evaluasi</a>
     </div>
 </div>
 
