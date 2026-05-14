@@ -171,8 +171,14 @@ $pf = [];
                     <th>VRN</th>
                     <th>VSN</th>
                     <th>VTN</th>
-                    <th>V Mean</th>
+                
 
+                    <!-- TEGANGAN LINE -->
+                    <th>VRT</th>
+                    <th>VTS</th>
+                    <th>VSR</th>
+
+                    <th>V Mean</th>
                     <!-- DAYA -->
                     <th>Power (kW)</th>
                     <th>Energy (kWh)</th>
@@ -180,6 +186,7 @@ $pf = [];
                     <!-- PARAMETER -->
                     <th>THD V</th>
                     <th>THD I</th>
+                    <th>Freq (Hz)</th>
                     <th>Unbalance</th>
                     <th>Deviasi</th>
                     <th>PF</th>
@@ -202,6 +209,11 @@ $pf = [];
                     <td>{{ number_format($d->vrn,2) }}</td>
                     <td>{{ number_format($d->vsn,2) }}</td>
                     <td>{{ number_format($d->vtn,2) }}</td>
+
+                    <td>{{ number_format($d->vrt,2) }}</td>
+                    <td>{{ number_format($d->vts,2) }}</td>
+                    <td>{{ number_format($d->vsr,2) }}</td>
+
                     <td>{{ number_format($d->vmean,2) }}</td>
 
                     <!-- DAYA -->
@@ -211,6 +223,7 @@ $pf = [];
                     <!-- PARAMETER -->
                     <td>{{ number_format($d->thdv ?? 0,2) }}%</td>
                     <td>{{ number_format($d->thdi ?? 0,2) }}%</td>
+                    <td>{{ number_format($d->freq,2) }}</td>
                     <td>{{ number_format($d->unbalance,2) }}%</td>
                     <td>{{ number_format($d->deviasi,2) }}%</td>
                     <td>{{ number_format($d->pf,2) }}</td>

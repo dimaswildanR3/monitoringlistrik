@@ -46,6 +46,11 @@ class LogEnergyController extends Controller
         $is = $request->is;
         $it = $request->it;
         $imean = ($ir + $is + $it) / 3;
+        $T = $request->periode; 
+        $freq = ($T != 0) ? 1 / $T : 0;
+        $vrt = round(sqrt(3) * $vrn, 2);
+        $vts = round(sqrt(3) * $vsn, 2);
+        $vsr = round(sqrt(3) * $vtn, 2);
         LogEnergy::create([
             'id_device' => $request->id_device,
             'waktu_log' => $request->waktu_log ?? now(),
@@ -56,6 +61,9 @@ class LogEnergyController extends Controller
             'vrn' => $vrn,
             'vsn' => $vsn,
             'vtn' => $vtn,
+            'vrt' => $vrt,
+            'vts' => $vts,
+            'vsr' => $vsr,
             'vmean' => $avg,
             'v_nominal' => $Vnominal,
             'vrs' => $request->vrs,
@@ -68,7 +76,7 @@ class LogEnergyController extends Controller
             'pvar' => $request->pvar,
             'pva' => $request->pva,    
             'pf' => $pf,
-            'freq' => $request->freq,
+            'freq' => $freq,
             'ener' => $request->ener,
             'thdv' => $thdv,
             'thdi' => $thdi,  
