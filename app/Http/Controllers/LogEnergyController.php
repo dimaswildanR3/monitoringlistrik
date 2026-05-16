@@ -53,6 +53,7 @@ class LogEnergyController extends Controller
         $vsr = round(sqrt(3) * $vtn, 2);
         LogEnergy::create([
             'id_device' => $request->id_device,
+            'periode' => $request->periode,
             'waktu_log' => $request->waktu_log ?? now(),
             'ir' => $request->ir,
             'is' => $request->is,
