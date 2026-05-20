@@ -65,7 +65,20 @@
 </div>
 
 <div class="container">
-
+<div style="margin-bottom:15px;">
+    <button onclick="exportTableToExcel()" 
+        style="
+            background:#27ae60;
+            color:white;
+            border:none;
+            padding:10px 15px;
+            border-radius:6px;
+            cursor:pointer;
+            font-weight:bold;
+        ">
+        📥 Export Excel
+    </button>
+</div>
 <table>
     <thead>
         <tr>
@@ -112,9 +125,38 @@
     </tr>
     @endforeach
 </tbody>
+
 </table>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+function exportTableToExcel() {
 
+    const table = document.querySelector("table");
+
+    const clonedTable = table.cloneNode(true);
+
+    // hapus class warna agar export bersih
+    clonedTable.querySelectorAll("td").forEach(td => {
+        td.classList.remove("ok");
+        td.classList.remove("bad");
+    });
+
+    const wb = XLSX.utils.table_to_book(clonedTable, {
+        sheet: "Audit Energi"
+    });
+
+    const today = new Date();
+
+    const fileName =
+        "audit_energi_" +
+        today.getFullYear() + "-" +
+        (today.getMonth() + 1) + "-" +
+        today.getDate() + ".xlsx";
+
+    XLSX.writeFile(wb, fileName);
+}
+</script>
 </body>
 </html>
