@@ -223,7 +223,7 @@ $pf = [];
                     <td>{{ number_format($d->vsn,2) }}</td>
                     <td>{{ number_format($d->vtn,2) }}</td>
 
-                    <td>{{ number_format($d->vrt,2) }}</td>
+                    <td>{{ number_format($d->vrs,2) }}</td>
                     <td>{{ number_format($d->vst,2) }}</td>
                     <td>{{ number_format($d->vtr,2) }}</td>
 
