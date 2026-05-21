@@ -187,9 +187,9 @@ $pf = [];
                 
 
                     <!-- TEGANGAN LINE -->
-                    <th>VRT</th>
-                    <th>VTS</th>
-                    <th>VSR</th>
+                    <th>VRS</th>
+                    <th>VST</th>
+                    <th>VTR</th>
 
                     <th>V Mean</th>
                     <!-- DAYA -->
@@ -224,8 +224,8 @@ $pf = [];
                     <td>{{ number_format($d->vtn,2) }}</td>
 
                     <td>{{ number_format($d->vrt,2) }}</td>
-                    <td>{{ number_format($d->vts,2) }}</td>
-                    <td>{{ number_format($d->vsr,2) }}</td>
+                    <td>{{ number_format($d->vst,2) }}</td>
+                    <td>{{ number_format($d->vtr,2) }}</td>
 
                     <td>{{ number_format($d->vmean,2) }}</td>
 
