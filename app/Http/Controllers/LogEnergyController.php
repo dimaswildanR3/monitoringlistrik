@@ -13,8 +13,7 @@ class LogEnergyController extends Controller
         $vsn = $request->vsn;
         $vtn = $request->vtn;
         $pf   = $request->pf;
-        $thdv = $request->thdv;
-        $thdi = $request->thdi;
+      
         $avg = ($vrn + $vsn + $vtn) / 3;       
         $dev_r = abs($vrn - $avg);
         $dev_s = abs($vsn - $avg);
@@ -30,18 +29,11 @@ class LogEnergyController extends Controller
         $dev_t_pct = round($dev_t_pct, 2);
         $deviasi = round(($dev_r_pct + $dev_s_pct + $dev_t_pct) / 3, 2);
         $unbalance = round($unbalance, 2);
-        $status_thdv = ($thdv >= 1 && $thdv <= 5) ? 1 : 0;
-        $status_thdi = ($thdi >= 1 && $thdi <= 5) ? 1 : 0;
+     
         $status_unbalance = ($unbalance <= 2) ? 1 : 0;
         $status_deviasi = ($deviasi >= -10 && $deviasi <= 5) ? 1 : 0;
         $status_pf = ($pf >= 0.85) ? 1 : 0;
-        $total_status =
-            $status_thdv +
-            $status_thdi +
-            $status_unbalance +
-            $status_deviasi +
-            $status_pf;
-        $audit = ($total_status == 5) ? 1 : 0;
+      
         $ir = $request->ir;
         $is = $request->is;
         $it = $request->it;
@@ -51,6 +43,32 @@ class LogEnergyController extends Controller
         $vrt = round(sqrt(3) * $vrn, 2);
         $vts = round(sqrt(3) * $vsn, 2);
         $vsr = round(sqrt(3) * $vtn, 2);
+        if ($avg > 0) {
+            $sum_squares_v = pow($vrn - $avg, 2) + pow($vsn - $avg, 2) + pow($vtn - $avg, 2);
+            $thdv = (sqrt($sum_squares_v) / $avg) * 100;
+            $thdv = round($thdv, 2);
+        } else {
+            $thdv = 0;
+        }
+
+        if ($imean > 0) {
+            $sum_squares_i = pow($ir - $imean, 2) + pow($is - $imean, 2) + pow($it - $imean, 2);
+            $thdi = (sqrt($sum_squares_i) / $imean) * 100;
+            $thdi = round($thdi, 2);
+        } else {
+            $thdi = 0;
+        }
+
+        $status_thdv = ($thdv >= 0 && $thdv <= 5) ? 1 : 0;
+        $status_thdi = ($thdi >= 0 && $thdi <= 5) ? 1 : 0;
+
+        $total_status =
+            $status_thdv +
+            $status_thdi +
+            $status_unbalance +
+            $status_deviasi +
+            $status_pf;
+        $audit = ($total_status == 5) ? 1 : 0;
         LogEnergy::create([
             'id_device' => $request->id_device,
             'periode' => $request->periode,
