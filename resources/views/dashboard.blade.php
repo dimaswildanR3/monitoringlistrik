@@ -241,11 +241,13 @@ $pf = [];
                     <td>{{ number_format($d->deviasi,2) }}%</td>
                     <td>{{ number_format($d->pf,2) }}</td>
 
-                    <td>{{ $d->waktu_log }}</td>
+                    <td>
+    {{ \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i:s') }}
+</td>
                 </tr>
                 @endforeach
             </tbody>
-        </table>
+    </table>
         <div id="pagination" style="margin-top:10px;"></div>
     </div>
    <!-- GRAFIK DUA KANVAS SEBELAH-SEBELAH -->
@@ -556,6 +558,71 @@ const fileName =
     today.getDate() + ".xlsx";
 
 XLSX.writeFile(wb, fileName);
+}
+
+function renderPagination() {
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalPages = getTotalPages();
+
+    function createButton(label, page, active = false) {
+        const btn = document.createElement("button");
+        btn.innerText = label;
+
+        if (active) {
+            btn.style.background = "#2c3e50";
+            btn.style.color = "white";
+        }
+
+        btn.onclick = () => showPage(page);
+        pagination.appendChild(btn);
+    }
+
+    // PREV
+    if (currentPage > 1) {
+        createButton("Prev", currentPage - 1);
+    }
+
+    const maxVisible = 3; // jumlah angka yang ditampilkan di tengah
+
+    // selalu tampilkan halaman 1
+    createButton(1, 1, currentPage === 1);
+
+    // titik awal range tengah
+    let start = Math.max(2, currentPage - 1);
+    let end = Math.min(totalPages - 1, currentPage + 1);
+
+    // kalau ada gap di kiri → tampilkan ...
+    if (start > 2) {
+        const dots = document.createElement("span");
+        dots.innerText = "...";
+        dots.style.padding = "5px 10px";
+        pagination.appendChild(dots);
+    }
+
+    // halaman tengah
+    for (let i = start; i <= end; i++) {
+        createButton(i, i, currentPage === i);
+    }
+
+    // kalau ada gap di kanan → tampilkan ...
+    if (end < totalPages - 1) {
+        const dots = document.createElement("span");
+        dots.innerText = "...";
+        dots.style.padding = "5px 10px";
+        pagination.appendChild(dots);
+    }
+
+    // selalu tampilkan halaman terakhir (kalau > 1)
+    if (totalPages > 1) {
+        createButton(totalPages, totalPages, currentPage === totalPages);
+    }
+
+    // NEXT
+    if (currentPage < totalPages) {
+        createButton("Next", currentPage + 1);
+    }
 }
 </script>
 
