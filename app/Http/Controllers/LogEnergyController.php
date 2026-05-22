@@ -39,7 +39,7 @@ class LogEnergyController extends Controller
         $it = $request->it;
         $imean = ($ir + $is + $it) / 3;
         $T = $request->periode; 
-        $freq = ($T != 0) ? 1 / $T : 0;
+        $freq = $request->freq;
         $vrt = round(sqrt(3) * $vrn, 2);
         $vts = round(sqrt(3) * $vsn, 2);
         $vsr = round(sqrt(3) * $vtn, 2);
