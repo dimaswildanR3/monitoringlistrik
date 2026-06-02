@@ -114,29 +114,29 @@
         <td>{{ $d->id_device }}</td>
         <td>{{ \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i:s') }}</td>
 
-        <td class="{{ $d->status_thdv ? 'ok' : 'bad' }}">
-            {{ $d->status_thdv ? 'Standar' : 'Tidak' }}
-        </td>
+        <td class="{{ $d->status_thdv == 1 ? 'ok' : 'bad' }}">
+    {{ $d->status_thdv == 1 ? 'Standar' : 'Tidak' }}
+</td>
 
-        <td class="{{ $d->status_thdi ? 'ok' : 'bad' }}">
-            {{ $d->status_thdi ? 'Standar' : 'Tidak' }}
-        </td>
+<td class="{{ $d->status_thdi == 1 ? 'ok' : 'bad' }}">
+    {{ $d->status_thdi == 1 ? 'Standar' : 'Tidak' }}
+</td>
 
-        <td class="{{ $d->status_unbalance ? 'ok' : 'bad' }}">
-            {{ $d->status_unbalance ? 'Standar' : 'Tidak' }}
-        </td>
+<td class="{{ $d->status_unbalance == 1 ? 'ok' : 'bad' }}">
+    {{ $d->status_unbalance == 1 ? 'Standar' : 'Tidak' }}
+</td>
 
-        <td class="{{ $d->status_deviasi ? 'ok' : 'bad' }}">
-            {{ $d->status_deviasi ? 'Standar' : 'Tidak' }}
-        </td>
+<td class="{{ $d->status_deviasi == 1 ? 'ok' : 'bad' }}">
+    {{ $d->status_deviasi == 1 ? 'Standar' : 'Tidak' }}
+</td>
 
-        <td class="{{ $d->status_pf ? 'ok' : 'bad' }}">
-            {{ $d->status_pf ? 'Standar' : 'Tidak' }}
-        </td>
+<td class="{{ $d->status_pf == 1 ? 'ok' : 'bad' }}">
+    {{ $d->status_pf == 1 ? 'Standar' : 'Tidak' }}
+</td>
 
-        <td class="{{ $d->audit ? 'ok' : 'bad' }}">
-            {{ $d->audit ? 'NORMAL' : 'TIDAK NORMAL' }}
-        </td>
+<td class="{{ $d->audit == 1 ? 'ok' : 'bad' }}">
+    {{ $d->audit == 1 ? 'NORMAL' : 'TIDAK NORMAL' }}
+</td>
     </tr>
     @endforeach
     </tbody>
