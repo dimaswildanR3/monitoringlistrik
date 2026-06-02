@@ -85,8 +85,89 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 15px;
+    
 }
+
+.filter-box {
+    background: white;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.filter-form {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.filter-group label {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.filter-group input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-filter {
+    background: #2c3e50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-filter:hover {
+    background: #1a252f;
+}
+
+.btn-reset {
+    background: #e74c3c;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-reset:hover {
+    background: #c0392b;
+}
+
+
     @media (max-width: 768px) {
+        .filter-form {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
         .charts-row {
             flex-direction: column; /* grafik stack di HP */
         }
@@ -105,6 +186,8 @@
             padding: 15px;
         }
     }
+
+
 </style>
 </head>
 <body>
@@ -117,19 +200,30 @@
         <a href="/hasil">Evaluasi</a>
     </div>
 </div>
-
-<form method="GET" action="">
-    <label>Dari:</label>
-    <input type="datetime-local" name="start" value="{{ request('start') }}">
-
-    <label>Sampai:</label>
-    <input type="datetime-local" name="end" value="{{ request('end') }}">
-
-    <button type="submit">Filter</button>
-</form>
 <div class="container">
 
     <h2>📊 Grafik Monitoring</h2>
+<div class="filter-box">
+    <form method="GET" action="" class="filter-form">
+
+        <div class="filter-group">
+            <label>Dari</label>
+            <input type="datetime-local" name="start" value="{{ request('start') }}">
+        </div>
+
+        <div class="filter-group">
+            <label>Sampai</label>
+            <input type="datetime-local" name="end" value="{{ request('end') }}">
+        </div>
+
+        <div class="filter-actions">
+            <button type="submit" class="btn-filter">🔍 Filter</button>
+            <a href="/" class="btn-reset">Reset</a>
+        </div>
+
+    </form>
+</div>
+
 
     @php
     $labels = [];
@@ -478,7 +572,7 @@ new Chart(document.getElementById('chartPF'), {
 });
 
 // auto refresh
-setTimeout(() => { location.reload(); }, 10000);
+// setTimeout(() => { location.reload(); }, 10000);
 
 const rowsPerPage = 10;
 const table = document.getElementById("tableBody");
