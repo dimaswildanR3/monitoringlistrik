@@ -10,7 +10,9 @@ class DashboardController extends Controller
 {
     public function index()
 {
-    $data = LogEnergy::latest()->get();
+    $data =  LogEnergy::where('waktu_log', '>=', now()->subDays(2))
+    ->latest()
+    ->get();
     return view('dashboard', compact('data'));
 }
     public function hasil()
