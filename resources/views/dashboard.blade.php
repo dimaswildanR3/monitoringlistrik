@@ -187,6 +187,7 @@ foreach($data as $d){
             <td>{{ \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i:s') }}</td>
         </tr>
         @endforeach
+        
         </tbody>
     </table>
 </div>
@@ -238,7 +239,6 @@ foreach($data as $d){
 </div>
 
 </div>
-
 <script>
 function makeChart(id,label,data,color){
     new Chart(document.getElementById(id),{
@@ -262,7 +262,7 @@ function makeChart(id,label,data,color){
     });
 }
 
-// COLORFUL CHARTS (UPDATED)
+/* ================= CHARTS ================= */
 makeChart('chartVoltage','Voltage',@json($vmean),'#3498db');
 makeChart('chartCurrent','Current',@json($imean),'#2ecc71');
 makeChart('chartEnergy','Energy',@json($energy),'#9b59b6');
@@ -271,7 +271,99 @@ makeChart('chartTHDI','THD Current',@json($thdi),'#e74c3c');
 makeChart('chartUnbalance','Unbalance',@json($unb),'#1abc9c');
 makeChart('chartDeviasi','Deviasi',@json($dev),'#f1c40f');
 makeChart('chartPF','Power Factor',@json($pf),'#34495e');
-</script>
 
+
+/* ================= PAGINATION ================= */
+const rowsPerPage = 10;
+const tableBody = document.getElementById("tableBody");
+const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+let currentPage = 1;
+
+function getTotalPages() {
+    return Math.ceil(rows.length / rowsPerPage);
+}
+
+function showPage(page) {
+    currentPage = page;
+
+    rows.forEach((row, index) => {
+        row.style.display =
+            (index >= (page - 1) * rowsPerPage &&
+             index < page * rowsPerPage)
+            ? ""
+            : "none";
+    });
+
+    renderPagination();
+}
+
+function renderPagination() {
+    let pagination = document.getElementById("pagination");
+
+    if (!pagination) {
+        pagination = document.createElement("div");
+        pagination.id = "pagination";
+        pagination.style.textAlign = "center";
+        pagination.style.marginTop = "15px";
+
+        document.querySelector(".box").appendChild(pagination);
+    }
+
+    pagination.innerHTML = "";
+
+    const totalPages = getTotalPages();
+
+    function btn(label, page, active = false) {
+        const b = document.createElement("button");
+        b.innerText = label;
+        b.style.margin = "2px";
+        b.style.padding = "5px 10px";
+        b.style.border = "none";
+        b.style.cursor = "pointer";
+        b.style.borderRadius = "4px";
+
+        if (active) {
+            b.style.background = "#2c3e50";
+            b.style.color = "white";
+        }
+
+        b.onclick = () => showPage(page);
+        pagination.appendChild(b);
+    }
+
+    if (currentPage > 1) btn("Prev", currentPage - 1);
+
+    btn(1, 1, currentPage === 1);
+
+    let start = Math.max(2, currentPage - 1);
+    let end = Math.min(totalPages - 1, currentPage + 1);
+
+    if (start > 2) {
+        const dots = document.createElement("span");
+        dots.innerText = "...";
+        pagination.appendChild(dots);
+    }
+
+    for (let i = start; i <= end; i++) {
+        btn(i, i, currentPage === i);
+    }
+
+    if (end < totalPages - 1) {
+        const dots = document.createElement("span");
+        dots.innerText = "...";
+        pagination.appendChild(dots);
+    }
+
+    if (totalPages > 1) {
+        btn(totalPages, totalPages, currentPage === totalPages);
+    }
+
+    if (currentPage < totalPages) btn("Next", currentPage + 1);
+}
+
+// INIT
+showPage(1);
+</script>
 </body>
 </html>

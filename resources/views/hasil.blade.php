@@ -112,7 +112,7 @@
     @foreach($data as $d)
     <tr>
         <td>{{ $d->id_device }}</td>
-        <td>{{ \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i:s') }}</td>
+        <td>{{ $d->created_at ? \Carbon\Carbon::parse($d->created_at)->format('d-m-Y H:i:s') : '-' }}</td>
 
         <td class="{{ $d->status_thdv == 1 ? 'ok' : 'bad' }}">
     {{ $d->status_thdv == 1 ? 'Standar' : 'Tidak' }}
