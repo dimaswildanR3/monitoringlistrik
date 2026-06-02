@@ -203,7 +203,7 @@
 <div class="container">
 
     <h2>📊 Grafik Monitoring</h2>
-<div class="filter-box">
+<!-- <div class="filter-box">
     <form method="GET" action="" class="filter-form">
 
         <div class="filter-group">
@@ -222,7 +222,7 @@
         </div>
 
     </form>
-</div>
+</div> -->
 
 
     @php
