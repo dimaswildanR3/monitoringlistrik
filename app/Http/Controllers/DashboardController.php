@@ -11,10 +11,10 @@ class DashboardController extends Controller
     public function index()
     {
         // auto delete data lebih dari 2 hari
-        // LogEnergy::where('waktu_log', '<', now()->subDays(2))->delete();
+        LogEnergy::where('created_at', '<', now()->subDays(2))->delete();
 
         // ambil hanya 2 hari terakhir
-        $data = LogEnergy::whereBetween('waktu_log', [
+        $data = LogEnergy::whereBetween('created_at', [
             now()->subDays(1)->startOfDay(),
             now()->endOfDay()
         ])->latest()->get();
@@ -24,7 +24,7 @@ class DashboardController extends Controller
 
     public function hasil()
     {
-        $data = LogEnergy::whereBetween('waktu_log', [
+        $data = LogEnergy::whereBetween('created_at', [
             now()->subDays(1)->startOfDay(),
             now()->endOfDay()
         ])->latest()->get();
