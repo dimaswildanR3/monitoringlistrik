@@ -43,12 +43,5 @@ class LogEnergy extends Model
     ];
 
     // 🔥 OPTIONAL (biar otomatis boolean)
-    protected $casts = [
-        'status_thdv' => 'boolean',
-        'status_thdi' => 'boolean',
-        'status_unbalance' => 'boolean',
-        'status_deviasi' => 'boolean',
-        'status_pf' => 'boolean',
-        'audit' => 'boolean',
-    ];
+   
 }
