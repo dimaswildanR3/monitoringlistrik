@@ -83,9 +83,9 @@ class LogEnergyController extends Controller
         }
 
         
-        $status_thdv = ($thdv >= 0 && $thdv <= 5) ? 1 : 0;
-        $status_thdi = ($thdi >= 0 && $thdi <= 5) ? 1 : 0;
-        $status_unbalance = ($unbalance <= 2) ? 1 : 0;
+        $status_thdv = ($thdv > 0 && $thdv <= 5) ? 1 : 0;
+        $status_thdi = ($thdi > 0 && $thdi <= 5) ? 1 : 0;
+        $status_unbalance = ($unbalance >= 0 && $unbalance <= 2) ? 1 : 0;
         $status_deviasi = ($deviasi >= -10 && $deviasi <= 5) ? 1 : 0;
         $status_pf = ($pf >= 0.85 && $pf <= 1) ? 1 : 0;
         
