@@ -129,6 +129,7 @@
     $power = [];
     $energy = [];
     $thdi = [];
+    $thdv = [];
 $unb = [];
 $dev = [];
 $pf = [];
