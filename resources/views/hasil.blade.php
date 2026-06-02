@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <meta charset="UTF-8">
     <title>Audit Energi Kelistrikan</title>
 
@@ -12,18 +12,47 @@
             margin: 0;
         }
 
+        /* ==========================================
+           UPDATE: HEADER DENGAN LOGO YANG SERAGAM
+           ========================================== */
         .header {
             background: #2c3e50;
-            padding: 15px 30px;
+            padding: 10px 20px;
             color: white;
             display: flex;
             justify-content: space-between;
+            align-items: center; /* Membuat isi header sejajar vertikal di tengah */
+            flex-wrap: wrap;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Jarak antara logo PPNS dan tulisan teks */
+        }
+
+        .logo-ppns {
+            height: 45px; /* Ukuran tinggi logo PPNS */
+            width: auto;
+        }
+
+        .menu-section {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Jarak antara menu dan logo Himaliskal */
+        }
+
+        .logo-himaliskal {
+            height: 45px; /* Ukuran tinggi logo Himaliskal */
+            width: auto;
+            border-radius: 4px; /* Sudut melengkung halus */
         }
 
         .menu a {
             color: white;
-            margin-left: 20px;
+            margin-left: 15px;
             text-decoration: none;
+            display: inline-block;
         }
 
         .container {
@@ -65,16 +94,48 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
+        /* ==========================================
+           RESPONSIVE MODE UNTUK LAYAR HP
+           ========================================== */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .menu-section {
+                width: 100%;
+                justify-content: space-between; /* Menu kiri, logo kanan di HP */
+                gap: 0;
+            }
+
+            .menu a {
+                margin-left: 0;
+                margin-right: 15px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <b>⚡ Audit Energi Kelistrikan</b>
+    <div class="brand-section">
+        <img src="https://monitoringppns.com/2.png" alt="Logo PPNS" class="logo-ppns">
+        <span style="font-size: 1.1em; font-weight: bold;">Audit Energi Kelistrikan</span>
+    </div>
 
-    <div class="menu">
-        <a href="/">Dashboard</a>
-        <a href="/hasil">Evaluasi</a>
+    <div class="menu-section">
+        <div class="menu">
+            <a href="/">Dashboard</a>
+            <a href="/hasil">Evaluasi</a>
+        </div>
+        <img src="https://monitoringppns.com/1.png" alt="Logo Himaliskal" class="logo-himaliskal">
     </div>
 </div>
 
@@ -116,28 +177,28 @@
         <td>{{ $d->created_at ? \Carbon\Carbon::parse($d->created_at)->format('d-m-Y H:i:s') : '-' }}</td>
 
         <td class="{{ $d->status_thdv == 1 ? 'ok' : 'bad' }}">
-    {{ $d->status_thdv == 1 ? 'Standar' : 'Tidak' }}
-</td>
+            {{ $d->status_thdv == 1 ? 'Standar' : 'Tidak' }}
+        </td>
 
-<td class="{{ $d->status_thdi == 1 ? 'ok' : 'bad' }}">
-    {{ $d->status_thdi == 1 ? 'Standar' : 'Tidak' }}
-</td>
+        <td class="{{ $d->status_thdi == 1 ? 'ok' : 'bad' }}">
+            {{ $d->status_thdi == 1 ? 'Standar' : 'Tidak' }}
+        </td>
 
-<td class="{{ $d->status_unbalance == 1 ? 'ok' : 'bad' }}">
-    {{ $d->status_unbalance == 1 ? 'Standar' : 'Tidak' }}
-</td>
+        <td class="{{ $d->status_unbalance == 1 ? 'ok' : 'bad' }}">
+            {{ $d->status_unbalance == 1 ? 'Standar' : 'Tidak' }}
+        </td>
 
-<td class="{{ $d->status_deviasi == 1 ? 'ok' : 'bad' }}">
-    {{ $d->status_deviasi == 1 ? 'Standar' : 'Tidak' }}
-</td>
+        <td class="{{ $d->status_deviasi == 1 ? 'ok' : 'bad' }}">
+            {{ $d->status_deviasi == 1 ? 'Standar' : 'Tidak' }}
+        </td>
 
-<td class="{{ $d->status_pf == 1 ? 'ok' : 'bad' }}">
-    {{ $d->status_pf == 1 ? 'Standar' : 'Tidak' }}
-</td>
+        <td class="{{ $d->status_pf == 1 ? 'ok' : 'bad' }}">
+            {{ $d->status_pf == 1 ? 'Standar' : 'Tidak' }}
+        </td>
 
-<td class="{{ $d->audit == 1 ? 'ok' : 'bad' }}">
-    {{ $d->audit == 1 ? 'NORMAL' : 'TIDAK NORMAL' }}
-</td>
+        <td class="{{ $d->audit == 1 ? 'ok' : 'bad' }}">
+            {{ $d->audit == 1 ? 'NORMAL' : 'TIDAK NORMAL' }}
+        </td>
     </tr>
     @endforeach
     </tbody>
@@ -146,8 +207,6 @@
 <div id="pagination"></div>
 
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <script>
 function exportTableToExcel() {
@@ -248,7 +307,6 @@ function renderPagination() {
 
 // init
 showPage(1);
-
 </script>
 
 </body>

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Monitoring Energy IoT</title>
 
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -14,13 +13,40 @@
         margin: 0;
     }
 
+    /* =========================
+       UPDATE: HEADER WITH LOGOS
+    ========================= */
     .header {
         background: #2c3e50;
-        padding: 15px 20px;
+        padding: 10px 20px;
         color: white;
         display: flex;
         justify-content: space-between;
+        align-items: center; /* Membuat isi header sejajar vertikal di tengah */
         flex-wrap: wrap;
+    }
+
+    .brand-section {
+        display: flex;
+        align-items: center;
+        gap: 12px; /* Jarak antara logo PPNS dan tulisan teks */
+    }
+
+    .logo-ppns {
+        height: 45px; /* Ukuran tinggi logo PPNS */
+        width: auto;
+    }
+
+    .menu-section {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* Jarak antara menu dan logo Himaliskal */
+    }
+
+    .logo-himaliskal {
+        height: 45px; /* Ukuran tinggi logo Himaliskal */
+        width: auto;
+        border-radius: 4px; /* Sedikit melengkung di sudut agar rapi */
     }
 
     .menu a {
@@ -28,7 +54,6 @@
         margin-left: 15px;
         text-decoration: none;
         display: inline-block;
-        margin-top: 5px;
     }
 
     .container {
@@ -85,15 +110,23 @@
         height: 100% !important;
     }
 
+    /* Responsive untuk HP */
     @media (max-width: 768px) {
         .header {
             flex-direction: column;
             align-items: flex-start;
+            gap: 10px;
+        }
+
+        .menu-section {
+            width: 100%;
+            justify-content: space-between; /* Menu kiri, logo kanan saat di HP */
+            gap: 0;
         }
 
         .menu a {
             margin-left: 0;
-            margin-top: 5px;
+            margin-right: 15px;
         }
 
         .container {
@@ -107,11 +140,17 @@
 <body>
 
 <div class="header">
-    <b>⚡ Monitoring Energy IoT</b>
+    <div class="brand-section">
+        <img src="https://monitoringppns.com/2.png" alt="Logo PPNS" class="logo-ppns">
+        <span style="font-size: 1.1em; font-weight: bold;">Monitoring Energy IoT</span>
+    </div>
 
-    <div class="menu">
-        <a href="/">Dashboard</a>
-        <a href="/hasil">Evaluasi</a>
+    <div class="menu-section">
+        <div class="menu">
+            <a href="/">Dashboard</a>
+            <a href="/hasil">Evaluasi</a>
+        </div>
+        <img src="https://monitoringppns.com/1.png" alt="Logo Himaliskal" class="logo-himaliskal">
     </div>
 </div>
 
@@ -138,7 +177,6 @@ foreach($data as $d){
 @endphp
 
 
-<!-- TABLE (TETAP) -->
 <div class="box">
     <h2>📋 Data Monitoring Energi</h2>
 
@@ -193,7 +231,6 @@ foreach($data as $d){
 </div>
 
 
-<!-- CHARTS FULL WIDTH -->
 <div class="charts-row">
 
     <div class="box chart-box">
