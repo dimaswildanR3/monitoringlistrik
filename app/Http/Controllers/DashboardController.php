@@ -12,11 +12,15 @@ class DashboardController extends Controller
     {
         $query = LogEnergy::query();
     
+        // kalau user kirim filter
         if ($request->start && $request->end) {
             $query->whereBetween('waktu_log', [
                 $request->start,
                 $request->end
             ]);
+        } else {
+            // DEFAULT: hari ini
+            $query->whereDate('waktu_log', now()->toDateString());
         }
     
         $data = $query->latest()->get();
