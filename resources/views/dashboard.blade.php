@@ -118,6 +118,15 @@
     </div>
 </div>
 
+<form method="GET" action="">
+    <label>Dari:</label>
+    <input type="datetime-local" name="start" value="{{ request('start') }}">
+
+    <label>Sampai:</label>
+    <input type="datetime-local" name="end" value="{{ request('end') }}">
+
+    <button type="submit">Filter</button>
+</form>
 <div class="container">
 
     <h2>📊 Grafik Monitoring</h2>
