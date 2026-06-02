@@ -30,9 +30,7 @@ class LogEnergyController extends Controller
         $deviasi = round(($dev_r_pct + $dev_s_pct + $dev_t_pct) / 3, 2);
         $unbalance = round($unbalance, 2);
      
-        $status_unbalance = ($unbalance <= 2) ? 1 : 0;
-        $status_deviasi = ($deviasi >= -10 && $deviasi <= 5) ? 1 : 0;
-        $status_pf = ($pf >= 0.85) ? 1 : 0;
+     
       
         $ir = $request->ir;
         $is = $request->is;
@@ -61,14 +59,16 @@ class LogEnergyController extends Controller
 
         $status_thdv = ($thdv >= 0 && $thdv <= 5) ? 1 : 0;
         $status_thdi = ($thdi >= 0 && $thdi <= 5) ? 1 : 0;
-
+        $status_unbalance = ($unbalance <= 2) ? 1 : 0;
+        $status_deviasi = ($deviasi >= -10 && $deviasi <= 5) ? 1 : 0;
+        $status_pf = ($pf >= 0.85 && $pf <= 1) ? 1 : 0;
         $total_status =
             $status_thdv +
             $status_thdi +
             $status_unbalance +
             $status_deviasi +
             $status_pf;
-        $audit = ($total_status == 5) ? 1 : 0;
+            $audit = ($total_status == 5 || $total_status == 4) ? 1 : 0;
         LogEnergy::create([
             'id_device' => $request->id_device,
             'periode' => $request->periode,
