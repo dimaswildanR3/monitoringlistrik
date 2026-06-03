@@ -188,7 +188,7 @@ foreach($data as $d){
             <th>VRN</th><th>VSN</th><th>VTN</th>
             <th>VRS</th><th>VST</th><th>VTR</th>
             <th>V Mean</th>
-            <!-- <th>Power (kW)</th> -->
+            <th>Power (kW)</th>
             <th>Energy (kWh)</th>
             <th>THD V</th>
             <th>THD I</th>
@@ -214,7 +214,7 @@ foreach($data as $d){
             <td>{{ number_format($d->vst,2) }}</td>
             <td>{{ number_format($d->vtr,2) }}</td>
             <td>{{ number_format($d->vmean,2) }}</td>
-            <!-- <td>{{ number_format($d->pw,2) }}</td> -->
+            <td>{{ number_format($d->pw,2) }}</td>
             <td>{{ number_format($d->ener,2) }}</td>
             <td>{{ number_format($d->thdv ?? 0,2) }}%</td>
             <td>{{ number_format($d->thdi ?? 0,2) }}%</td>
