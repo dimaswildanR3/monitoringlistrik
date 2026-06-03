@@ -61,7 +61,7 @@ if ($imean > 0) {
         pow($is - $imean, 2) +
         pow($it - $imean, 2);
 
-    $thdi = (sqrt($sum_squares_i) / $imean) * 100;
+    $thdi = (sqrt($sum_squares_i) / $imean);
     $thdi = round($thdi, 2);
 } else {
     $thdi = 0;
