@@ -41,21 +41,31 @@ class LogEnergyController extends Controller
         $vrt = round(sqrt(3) * $vrn, 2);
         $vts = round(sqrt(3) * $vsn, 2);
         $vsr = round(sqrt(3) * $vtn, 2);
-        if ($avg > 0) {
-            $sum_squares_v = pow($vrn - $avg, 2) + pow($vsn - $avg, 2) + pow($vtn - $avg, 2);
-            $thdv = (sqrt($sum_squares_v) / $avg) * 100;
-            $thdv = round($thdv, 2);
-        } else {
-            $thdv = 0;
-        }
+     
+if ($avg > 0) {
+    $sum_squares_v =
+        pow($vrn - $avg, 2) +
+        pow($vsn - $avg, 2) +
+        pow($vtn - $avg, 2);
 
-        if ($imean > 0) {
-            $sum_squares_i = pow($ir - $imean, 2) + pow($is - $imean, 2) + pow($it - $imean, 2);
-            $thdi = (sqrt($sum_squares_i) / $imean);
-            $thdi = round($thdi, 2);
-        } else {
-            $thdi = 0;
-        }
+    $thdv = (sqrt($sum_squares_v) / $avg) * 100;
+    $thdv = round($thdv, 2);
+} else {
+    $thdv = 0;
+}
+
+
+if ($imean > 0) {
+    $sum_squares_i =
+        pow($ir - $imean, 2) +
+        pow($is - $imean, 2) +
+        pow($it - $imean, 2);
+
+    $thdi = (sqrt($sum_squares_i) / $imean) * 100;
+    $thdi = round($thdi, 2);
+} else {
+    $thdi = 0;
+}
 
         $status_thdv = ($thdv >= 0 && $thdv <= 5) ? 1 : 0;
         $status_thdi = ($thdi >= 0 && $thdi <= 5) ? 1 : 0;
