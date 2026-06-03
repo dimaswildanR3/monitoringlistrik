@@ -12,7 +12,7 @@ class LogEnergyController extends Controller
         $vrn = $request->vrn;
         $vsn = $request->vsn;
         $vtn = $request->vtn;
-        $pf   = $request->pf;
+        $pf = abs($request->pf);
       
         $avg = ($vrn + $vsn + $vtn) / 3;       
         $dev_r = abs($vrn - $avg);
