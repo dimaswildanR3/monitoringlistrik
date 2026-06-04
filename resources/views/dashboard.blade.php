@@ -178,7 +178,7 @@ foreach($data as $d){
 
 
 <div class="box">
-        <h2>📋 Data Monitoring Energi</h2>
+        <!-- <h2>📋 Data Monitoring Energi</h2> -->
         <div style="margin-bottom:15px;">
     <button onclick="exportTableToExcel()" 
         style="
