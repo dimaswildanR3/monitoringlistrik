@@ -5,6 +5,7 @@
     <title>Monitoring Energy IoT</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
     <style>
     body {
@@ -420,16 +421,12 @@ function renderPagination() {
 
 function exportTableToExcel() {
 
+// tampilkan semua row
+rows.forEach(row => row.style.display = "");
+
 const table = document.querySelector("table");
 
-// clone table supaya semua row tampil
-const clonedTable = table.cloneNode(true);
-
-clonedTable.querySelectorAll("tr").forEach(row => {
-    row.style.display = "";
-});
-
-const wb = XLSX.utils.table_to_book(clonedTable, {
+const wb = XLSX.utils.table_to_book(table, {
     sheet: "Monitoring Energy"
 });
 
@@ -438,10 +435,14 @@ const today = new Date();
 const fileName =
     "monitoring_energy_" +
     today.getFullYear() + "-" +
-    (today.getMonth() + 1) + "-" +
-    today.getDate() + ".xlsx";
+    String(today.getMonth() + 1).padStart(2, '0') + "-" +
+    String(today.getDate()).padStart(2, '0') +
+    ".xlsx";
 
 XLSX.writeFile(wb, fileName);
+
+// kembalikan pagination
+showPage(currentPage);
 }
 showPage(1);
 </script>
