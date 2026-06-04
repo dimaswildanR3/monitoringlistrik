@@ -419,21 +419,29 @@ function renderPagination() {
 
 
 function exportTableToExcel() {
-    const table = document.querySelector("table");
-    const clonedTable = table.cloneNode(true);
 
-    const wb = XLSX.utils.table_to_book(clonedTable, {
-        sheet: "Audit Energi"
-    });
+const table = document.querySelector("table");
 
-    const today = new Date();
-    const fileName =
-        "audit_energi_" +
-        today.getFullYear() + "-" +
-        (today.getMonth() + 1) + "-" +
-        today.getDate() + ".xlsx";
+// clone table supaya semua row tampil
+const clonedTable = table.cloneNode(true);
 
-    XLSX.writeFile(wb, fileName);
+clonedTable.querySelectorAll("tr").forEach(row => {
+    row.style.display = "";
+});
+
+const wb = XLSX.utils.table_to_book(clonedTable, {
+    sheet: "Monitoring Energy"
+});
+
+const today = new Date();
+
+const fileName =
+    "monitoring_energy_" +
+    today.getFullYear() + "-" +
+    (today.getMonth() + 1) + "-" +
+    today.getDate() + ".xlsx";
+
+XLSX.writeFile(wb, fileName);
 }
 showPage(1);
 </script>
