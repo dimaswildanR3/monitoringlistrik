@@ -27,7 +27,24 @@ class LogEnergyController extends Controller
         $dev_r_pct = round($dev_r_pct, 2);
         $dev_s_pct = round($dev_s_pct, 2);
         $dev_t_pct = round($dev_t_pct, 2);
-        $deviasi = round(($dev_r_pct + $dev_s_pct + $dev_t_pct) / 3, 2);
+        // $deviasi = round(($dev_r_pct + $dev_s_pct + $dev_t_pct) / 3, 2);
+        $N = $request->v_nominal ?? 400;
+
+$vrs = $request->vrs;
+$vst = $request->vst;
+$vtr = $request->vtr;
+
+// deviasi persen tiap line
+$dev_r_pct = ($N != 0) ? (($vrs - $N) / $N) * 100 : 0;
+$dev_s_pct = ($N != 0) ? (($vst - $N) / $N) * 100 : 0;
+$dev_t_pct = ($N != 0) ? (($vtr - $N) / $N) * 100 : 0;
+
+$dev_r_pct = round($dev_r_pct, 2);
+$dev_s_pct = round($dev_s_pct, 2);
+$dev_t_pct = round($dev_t_pct, 2);
+
+// rata-rata deviasi
+$deviasi = round(($dev_r_pct + $dev_s_pct + $dev_t_pct) / 3, 2);
         $unbalance = round($unbalance, 2);
      
      
