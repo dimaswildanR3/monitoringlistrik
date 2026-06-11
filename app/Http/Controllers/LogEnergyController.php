@@ -12,7 +12,7 @@ class LogEnergyController extends Controller
         $vrn = $request->vrn;
         $vsn = $request->vsn;
         $vtn = $request->vtn;
-        $pf = abs($request->pf);
+        $pf = 0.86;
       
         $avg = ($vrn + $vsn + $vtn) / 3;       
         $dev_r = abs($vrn - $avg);
@@ -21,23 +21,23 @@ class LogEnergyController extends Controller
         $max_dev = max($dev_r, $dev_s, $dev_t);
         $unbalance = ($avg != 0) ? ($max_dev / $avg) * 100 : 0;
         $Vnominal = $request->v_nominal ?? 220;
-        $dev_r_pct = ($Vnominal != 0) ? (($vrn - $Vnominal) / $Vnominal) * 100 : 0;
-        $dev_s_pct = ($Vnominal != 0) ? (($vsn - $Vnominal) / $Vnominal) * 100 : 0;
-        $dev_t_pct = ($Vnominal != 0) ? (($vtn - $Vnominal) / $Vnominal) * 100 : 0;
-        $dev_r_pct = round($dev_r_pct, 2);
-        $dev_s_pct = round($dev_s_pct, 2);
-        $dev_t_pct = round($dev_t_pct, 2);
+        // $dev_r_pct = ($Vnominal != 0) ? (($vrn - $Vnominal) / $Vnominal) * 100 : 0;
+        // $dev_s_pct = ($Vnominal != 0) ? (($vsn - $Vnominal) / $Vnominal) * 100 : 0;
+        // $dev_t_pct = ($Vnominal != 0) ? (($vtn - $Vnominal) / $Vnominal) * 100 : 0;
+        // $dev_r_pct = round($dev_r_pct, 2);
+        // $dev_s_pct = round($dev_s_pct, 2);
+        // $dev_t_pct = round($dev_t_pct, 2);
         // $deviasi = round(($dev_r_pct + $dev_s_pct + $dev_t_pct) / 3, 2);
-        $N = $request->v_nominal ?? 400;
+        $N = 400;
 
 $vrs = $request->vrs;
 $vst = $request->vst;
 $vtr = $request->vtr;
 
-// deviasi persen tiap line
-$dev_r_pct = ($N != 0) ? (($vrs - $N) / $N) * 100 : 0;
-$dev_s_pct = ($N != 0) ? (($vst - $N) / $N) * 100 : 0;
-$dev_t_pct = ($N != 0) ? (($vtr - $N) / $N) * 100 : 0;
+// DEVIASI terhadap nominal 400V
+$dev_r_pct = (($vrs - $N) / $N) * 100;
+$dev_s_pct = (($vst - $N) / $N) * 100;
+$dev_t_pct = (($vtr - $N) / $N) * 100;
 
 $dev_r_pct = round($dev_r_pct, 2);
 $dev_s_pct = round($dev_s_pct, 2);
