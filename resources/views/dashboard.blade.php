@@ -1,205 +1,670 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <title>Monitoring Energy IoT</title>
+    <title>Monitoring Kelistrikan</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
     <style>
-    body {
-        font-family: Arial;
-        background: #f4f6f9;
-        margin: 0;
-    }
+        /* TABLE RESPONSIVE */
 
-    /* =========================
-       UPDATE: HEADER WITH LOGOS
-    ========================= */
-    .header {
-        background: #2c3e50;
-        padding: 10px 20px;
-        color: white;
-        display: flex;
-        justify-content: space-between;
-        align-items: center; /* Membuat isi header sejajar vertikal di tengah */
-        flex-wrap: wrap;
-    }
+.tableContainer{
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    border-radius:10px;
+    margin-top:15px;
+}
 
-    .brand-section {
-        display: flex;
-        align-items: center;
-        gap: 12px; /* Jarak antara logo PPNS dan tulisan teks */
-    }
+.tableContainer::-webkit-scrollbar{
+    height:8px;
+}
 
-    .logo-ppns {
-        height: 45px; /* Ukuran tinggi logo PPNS */
-        width: auto;
-    }
+.tableContainer::-webkit-scrollbar-thumb{
+    background:#cbd5e1;
+    border-radius:10px;
+}
 
-    .menu-section {
-        display: flex;
-        align-items: center;
-        gap: 15px; /* Jarak antara menu dan logo Himaliskal */
-    }
+table{
+    width:100%;
+    min-width:1400px;
+    border-collapse:collapse;
+    white-space:nowrap;
+}
 
-    .logo-himaliskal {
-        height: 45px; /* Ukuran tinggi logo Himaliskal */
-        width: auto;
-        border-radius: 4px; /* Sedikit melengkung di sudut agar rapi */
-    }
+thead{
+    position:sticky;
+    top:0;
+    z-index:2;
+}
 
-    .menu a {
-        color: white;
-        margin-left: 15px;
-        text-decoration: none;
-        display: inline-block;
-    }
+th{
+    background:#002a72;
+    color:white;
+    padding:12px;
+}
 
-    .container {
-        padding: 20px;
-    }
+td{
+    padding:10px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+}
 
-    .box {
-        background: white;
-        border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 20px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-        overflow-x: auto;
-    }
+tr:hover{
+    background:#f8fafc;
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 600px;
-    }
+        body {
+            background: #f5f7fb;
+        }
 
-    th {
-        background: #34495e;
-        color: white;
-        padding: 8px;
-    }
+        /* HEADER */
 
-    td {
-        padding: 8px;
-        border-bottom: 1px solid #eee;
-        text-align: center;
-    }
-
-    h2, h3 {
-        margin-bottom: 10px;
-        font-size: 1.2em;
-    }
-
-    /* =========================
-       FIX: FULL WIDTH CHART
-    ========================= */
-    .charts-row {
-        display: block;
-    }
-
-    .chart-box {
-        width: 100%;
-        height: 360px;
-        margin-bottom: 20px;
-    }
-
-    canvas {
-        width: 100% !important;
-        height: 100% !important;
-    }
-
-    /* Responsive untuk HP */
-    @media (max-width: 768px) {
         .header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
+            background: #002a72;
+            height: 75px;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
         }
 
-        .menu-section {
-            width: 100%;
-            justify-content: space-between; /* Menu kiri, logo kanan saat di HP */
-            gap: 0;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .menu a {
-            margin-left: 0;
-            margin-right: 15px;
+        .brand img {
+            height: 45px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         .container {
-            padding: 15px;
+            padding: 20px;
         }
-    }
 
+        .box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+            margin-bottom: 20px;
+        }
+
+        /* TOP TITLE */
+
+        .topHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+
+        /* STATUS */
+
+        .statusGrid {
+
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+margin-bottom: 10px;
+        }
+
+        .statusCard {
+
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+
+        }
+
+        .iconCircle {
+
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+
+        }
+
+        .greenBg {
+            background: #dff5e6;
+        }
+
+        .blueBg {
+            background: #dfe9ff;
+        }
+
+        .orangeBg {
+            background: #fff1d6;
+        }
+
+        .redBg {
+            background: #ffe2e2;
+        }
+
+        .big {
+
+            font-size: 30px;
+            font-weight: bold;
+
+        }
+
+        .green {
+            color: #16a34a;
+        }
+
+        .blue {
+            color: #2563eb;
+        }
+
+        .orange {
+            color: #f59e0b;
+        }
+
+        .red {
+            color: #ef4444;
+        }
+
+        .badge {
+
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+
+        }
+
+        .badgeGreen {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .badgeOrange {
+            background: #ffedd5;
+            color: #f97316;
+        }
+
+        /* CONTENT */
+
+        .content {
+
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+
+        }
+
+        .chartGrid {
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+
+        }
+
+        .chartCard {
+
+            height: 300px;
+
+        }
+
+        .sidePanel {
+
+            height: 100%;
+
+        }
+
+        .eval {
+
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+
+        }
+
+        .recommend {
+
+            background: #ecfdf5;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #86efac;
+
+        }
+
+        /* TABLE */
+
+        .exportBtn {
+
+            background: #2563eb;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+
+        }
+
+        table {
+
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1500px;
+
+        }
+
+        th {
+
+            background: #002a72;
+            color: white;
+            padding: 10px;
+
+        }
+
+        td {
+
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+
+        }
+
+        canvas {
+
+            height: 220px !important;
+
+        }
+
+        @media(max-width:1000px) {
+
+            .statusGrid {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .chartGrid {
+                grid-template-columns: 1fr;
+            }
+
+        }
     </style>
 </head>
 
 <body>
-
-<div class="header">
-    <div class="brand-section">
-        <img src="https://monitoringppns.com/2.png" alt="Logo PPNS" class="logo-ppns">
-        <span style="font-size: 1.1em; font-weight: bold;">Monitoring Energy IoT</span>
-    </div>
-
-    <div class="menu-section">
-        <div class="menu">
-            <a href="/">Dashboard</a>
-            <a href="/hasil">Evaluasi</a>
-        </div>
-        <img src="https://monitoringppns.com/1.png" alt="Logo Himaliskal" class="logo-himaliskal">
-    </div>
-</div>
-
-<div class="container">
-
-<h2>📊 Grafik Monitoring</h2>
-
 @php
-$labels=[];$vmean=[];$imean=[];
-$energy=[];$thdv=[];$thdi=[];
-$unb=[];$dev=[];$pf=[];
+$labels=[];$thdv=[];$thdi=[];
+$unb=[];$dev=[];
 
 foreach($data as $d){
-    $labels[] = \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i');
-    $vmean[] = (float)$d->vmean;
-    $imean[] = (float)$d->imean;
-    $energy[] = (float)$d->ener;
-    $thdv[] = (float)($d->thdv ?? 0);
-    $thdi[] = (float)($d->thdi ?? 0);
-    $unb[] = (float)$d->unbalance;
-    $dev[] = (float)$d->deviasi;
-    $pf[] = (float)$d->pf;
+
+    $labels[]=\Carbon\Carbon::parse(
+        $d->waktu_log
+    )->format('H:i');
+
+    $thdv[]=(float)$d->thdv;
+    $thdi[]=(float)$d->thdi;
+    $unb[]=(float)$d->unbalance;
+    $dev[]=(float)$d->deviasi;
 }
+
+$lastData = $data->last();
 @endphp
 
 
-<div class="box">
-        <!-- <h2>📋 Data Monitoring Energi</h2> -->
-        <div style="margin-bottom:15px;">
-    <button onclick="exportTableToExcel()" 
-        style="
-            background:#27ae60;
-            color:white;
-            border:none;
-            padding:10px 15px;
-            border-radius:6px;
-            cursor:pointer;
-            font-weight:bold;
-        ">
-        📥 Export Excel
-    </button>
+    <div class="header">
+
+        <div class="brand">
+
+            <img src="https://monitoringppns.com/2.png">
+
+            <h2>Monitoring Kelistrikan</h2>
+
+        </div>
+
+        <div class="nav">
+
+            <a href="/">Dashboard</a>
+            <a href="/hasil">Evaluasi</a>
+
+            <img
+                src="https://monitoringppns.com/1.png"
+                style="height:45px">
+
+        </div>
+
+    </div>
+
+
+
+    <div class="container">
+
+        <div class="box topHeader">
+
+            <div>
+
+                <h2>
+                    Dashboard Monitoring
+                </h2>
+
+                <p>
+                    Monitoring kualitas daya dan konsumsi energi listrik secara real-time
+                </p>
+
+            </div>
+
+            <div>
+
+                <div>
+                    Pembaruan terakhir:
+                    {{now()}}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="statusGrid">
+        <div class="statusCard">
+    <div class="iconCircle 
+        {{ isset($lastData) ? ($lastData->audit == 1 ? 'greenBg' : 'redBg') : 'grayBg' }}">
+        ⚡
+    </div>
+
+    <div class="statusContent">
+        <div>Status Sistem</div>
+
+        <div class="big 
+            {{ isset($lastData) ? ($lastData->audit == 1 ? 'green' : 'red') : 'gray' }}">
+            
+            {{ isset($lastData)
+                ? ($lastData->audit == 1 ? 'NORMAL' : 'TIDAK NORMAL')
+                : 'DATA KOSONG' }}
+        </div>
+
+        <span class="badge 
+            {{ isset($lastData) ? ($lastData->audit == 1 ? 'badgeGreen' : 'badgeRed') : 'badgeGray' }}">
+            
+            {{ isset($lastData)
+                ? ($lastData->audit == 1 ? 'Normal' : 'Tidak Normal')
+                : 'Belum ada data' }}
+        </span>
+    </div>
 </div>
 
-    <h2>📋 Data Monitoring Energi</h2>
+<style>
+.statusCard{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 
-    <table>
-        <thead>
-        <tr>
+.statusContent{
+    min-width:0;
+}
+
+.big{
+    white-space:nowrap;
+    font-weight:bold;
+}
+
+.badge{
+    white-space:nowrap;
+}
+
+.green{
+    color:#22c55e;
+}
+
+.red{
+    color:#ef4444;
+}
+</style>
+
+<div class="statusCard">
+    <div class="iconCircle blueBg">
+        T%
+    </div>
+
+    <div>
+        <div>THD V</div>
+
+        <div class="big blue">
+            {{ number_format(optional($lastData)->thdv ?? 0, 2) }}
+        </div>
+
+        <span class="badge 
+        {{ optional($lastData)->status_thdv == 1 ? 'badgeGreen' : 'badgeRed' }}">
+        
+            {{ optional($lastData)->status_thdv == 1 
+                ? 'Standar' 
+                : 'Belum ada data' }}
+                
+        </span>
+    </div>
+</div>
+<div class="statusCard">
+    <div class="iconCircle greenBg">
+        ⚡
+    </div>
+
+    <div>
+        <div>THD I</div>
+
+        <div class="big green">
+            {{ number_format(optional($lastData)->thdi ?? 0, 2) }}
+        </div>
+
+        <span class="badge
+        {{
+            is_null(optional($lastData)->status_thdi)
+            ? 'badgeGray'
+            : (optional($lastData)->status_thdi == 1
+                ? 'badgeGreen'
+                : 'badgeRed')
+        }}">
+            {{
+                is_null(optional($lastData)->status_thdi)
+                ? 'Belum ada data'
+                : (optional($lastData)->status_thdi == 1
+                    ? 'Standar'
+                    : 'Tidak')
+            }}
+        </span>
+    </div>
+</div>
+
+
+<div class="statusCard">
+    <div class="iconCircle orangeBg">
+        ⚖️
+    </div>
+
+    <div>
+        <div>Unbalance</div>
+
+        <div class="big orange">
+            {{ number_format(optional($lastData)->unbalance ?? 0, 2) }}
+        </div>
+
+        <span class="badge
+        {{
+            is_null(optional($lastData)->status_unbalance)
+            ? 'badgeGray'
+            : (optional($lastData)->status_unbalance == 1
+                ? 'badgeGreen'
+                : 'badgeRed')
+        }}">
+            {{
+                is_null(optional($lastData)->status_unbalance)
+                ? 'Belum ada data'
+                : (optional($lastData)->status_unbalance == 1
+                    ? 'Standar'
+                    : 'Tidak')
+            }}
+        </span>
+    </div>
+</div>
+
+
+<div class="statusCard">
+    <div class="iconCircle redBg">
+        Δ
+    </div>
+
+    <div>
+        <div>Deviasi</div>
+
+        <div class="big red">
+            {{ number_format(optional($lastData)->deviasi ?? 0, 2) }}
+        </div>
+
+        <span class="badge
+        {{
+            is_null(optional($lastData)->status_deviasi)
+            ? 'badgeGray'
+            : (optional($lastData)->status_deviasi == 1
+                ? 'badgeGreen'
+                : 'badgeRed')
+        }}">
+            {{
+                is_null(optional($lastData)->status_deviasi)
+                ? 'Belum ada data'
+                : (optional($lastData)->status_deviasi == 1
+                    ? 'Standar'
+                    : 'Tidak')
+            }}
+        </span>
+    </div>
+</div>
+
+</div>
+
+
+
+        <div class="content">
+
+            <div>
+
+                <div class="chartGrid">
+
+                    <div class="box chartCard">
+                        <h3>Tren THD V (%)</h3>
+                        <canvas id="chartTHDV"></canvas>
+                    </div>
+
+                    <div class="box chartCard">
+                        <h3>Tren THD I (%)</h3>
+                        <canvas id="chartTHDI"></canvas>
+                    </div>
+
+                    <div class="box chartCard">
+                        <h3>Tren Unbalance (%)</h3>
+                        <canvas id="chartUnbalance"></canvas>
+                    </div>
+
+                    <div class="box chartCard">
+                        <h3>Tren Deviasi (%)</h3>
+                        <canvas id="chartDeviasi"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="box sidePanel">
+
+                <h2>Hasil Evaluasi Otomatis</h2>
+
+                <div class="eval">
+                    ✓ THD V ({{number_format(end($thdv),2)}}%)
+                </div>
+
+                <div class="eval">
+                    ✓ THD I ({{number_format(end($thdi),2)}}%)
+                </div>
+
+                <div class="eval">
+                    ✓ Unbalance ({{number_format(end($unb),2)}}%)
+                </div>
+
+                <div class="eval">
+                    ⚠ Deviasi ({{number_format(end($dev),2)}}%)
+                </div>
+
+                <div class="recommend">
+
+                    <b>Rekomendasi</b>
+
+                    <p>
+
+                        THD V, THD I dan Unbalance normal.
+
+                        Deviasi perlu dipantau.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="box" style="margin-top: 10px;">
+
+            <button
+                class="exportBtn"
+                onclick="exportTableToExcel()">
+
+                📥 Export Excel
+
+            </button>
+
+            <h2>Data Monitoring Energi</h2>
+
+            <div class="tableContainer">
+
+            <table>
+
+                <thead>
+
+                <tr>
             <th>Device</th>
             <th>IR</th><th>IS</th><th>IT</th>
             <th>VRN</th><th>VSN</th><th>VTN</th>
@@ -215,11 +680,14 @@ foreach($data as $d){
             <th>PF</th>
             <th>Waktu</th>
         </tr>
-        </thead>
 
-        <tbody id="tableBody">
-        @foreach($data as $d)
-        <tr>
+                </thead>
+
+                <tbody id="tableBody">
+
+                    @foreach($data as $d)
+
+                    <tr>
             <td>{{ $d->id_device }}</td>
             <td>{{ number_format($d->ir,2) }}</td>
             <td>{{ number_format($d->is,2) }}</td>
@@ -241,210 +709,92 @@ foreach($data as $d){
             <td>{{ number_format($d->pf,2) }}</td>
             <td>{{ \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i:s') }}</td>
         </tr>
-        @endforeach
-        
-        </tbody>
-    </table>
-</div>
 
+                    @endforeach
 
-<div class="charts-row">
+                </tbody>
 
-    <div class="box chart-box">
-        <h3>Voltage (V Mean)</h3>
-        <canvas id="chartVoltage"></canvas>
+            </table>
+            </div>
+        </div>
+
     </div>
 
-    <div class="box chart-box">
-        <h3>Current (I Mean)</h3>
-        <canvas id="chartCurrent"></canvas>
-    </div>
+    <script>
+        function makeChart(id, data, color) {
 
-    <div class="box chart-box">
-        <h3>Energy (kWh)</h3>
-        <canvas id="chartEnergy"></canvas>
-    </div>
+            new Chart(
 
-    <div class="box chart-box">
-        <h3>THD Voltage (%)</h3>
-        <canvas id="chartTHDV"></canvas>
-    </div>
+                document.getElementById(id),
 
-    <div class="box chart-box">
-        <h3>THD Current (%)</h3>
-        <canvas id="chartTHDI"></canvas>
-    </div>
+                {
 
-    <div class="box chart-box">
-        <h3>Unbalance (%)</h3>
-        <canvas id="chartUnbalance"></canvas>
-    </div>
+                    type: 'line',
 
-    <div class="box chart-box">
-        <h3>Deviasi (%)</h3>
-        <canvas id="chartDeviasi"></canvas>
-    </div>
+                    data: {
 
-    <div class="box chart-box">
-        <h3>Power Factor</h3>
-        <canvas id="chartPF"></canvas>
-    </div>
+                        labels: @json($labels),
 
-</div>
+                        datasets: [{
 
-</div>
-<script>
-function makeChart(id,label,data,color){
-    new Chart(document.getElementById(id),{
-        type:'line',
-        data:{
-            labels:@json($labels),
-            datasets:[{
-                label:label,
-                data:data,
-                borderColor:color,
-                backgroundColor:color+'33',
-                borderWidth:2,
-                tension:0.3,
-                fill:true
-            }]
-        },
-        options:{
-            responsive:true,
-            maintainAspectRatio:false
-        }
-    });
-}
+                            data: data,
+                            borderColor: color,
+                            backgroundColor: color + '33',
+                            fill: true,
+                            tension: .4
 
-/* ================= CHARTS ================= */
-makeChart('chartVoltage','Voltage',@json($vmean),'#3498db');
-makeChart('chartCurrent','Current',@json($imean),'#2ecc71');
-makeChart('chartEnergy','Energy',@json($energy),'#9b59b6');
-makeChart('chartTHDV','THD Voltage',@json($thdv),'#e67e22');
-makeChart('chartTHDI','THD Current',@json($thdi),'#e74c3c');
-makeChart('chartUnbalance','Unbalance',@json($unb),'#1abc9c');
-makeChart('chartDeviasi','Deviasi',@json($dev),'#f1c40f');
-makeChart('chartPF','Power Factor',@json($pf),'#34495e');
+                        }]
 
+                    }
 
-/* ================= PAGINATION ================= */
-const rowsPerPage = 10;
-const tableBody = document.getElementById("tableBody");
-const rows = Array.from(tableBody.querySelectorAll("tr"));
+                });
 
-let currentPage = 1;
-
-function getTotalPages() {
-    return Math.ceil(rows.length / rowsPerPage);
-}
-
-function showPage(page) {
-    currentPage = page;
-
-    rows.forEach((row, index) => {
-        row.style.display =
-            (index >= (page - 1) * rowsPerPage &&
-             index < page * rowsPerPage)
-            ? ""
-            : "none";
-    });
-
-    renderPagination();
-}
-
-function renderPagination() {
-    let pagination = document.getElementById("pagination");
-
-    if (!pagination) {
-        pagination = document.createElement("div");
-        pagination.id = "pagination";
-        pagination.style.textAlign = "center";
-        pagination.style.marginTop = "15px";
-
-        document.querySelector(".box").appendChild(pagination);
-    }
-
-    pagination.innerHTML = "";
-
-    const totalPages = getTotalPages();
-
-    function btn(label, page, active = false) {
-        const b = document.createElement("button");
-        b.innerText = label;
-        b.style.margin = "2px";
-        b.style.padding = "5px 10px";
-        b.style.border = "none";
-        b.style.cursor = "pointer";
-        b.style.borderRadius = "4px";
-
-        if (active) {
-            b.style.background = "#2c3e50";
-            b.style.color = "white";
         }
 
-        b.onclick = () => showPage(page);
-        pagination.appendChild(b);
-    }
+        makeChart(
+            'chartTHDV',
+            @json($thdv),
+            '#2563eb'
+        );
 
-    if (currentPage > 1) btn("Prev", currentPage - 1);
+        makeChart(
+            'chartTHDI',
+            @json($thdi),
+            '#16a34a'
+        );
 
-    btn(1, 1, currentPage === 1);
+        makeChart(
+            'chartUnbalance',
+            @json($unb),
+            '#f59e0b'
+        );
 
-    let start = Math.max(2, currentPage - 1);
-    let end = Math.min(totalPages - 1, currentPage + 1);
+        makeChart(
+            'chartDeviasi',
+            @json($dev),
+            '#ef4444'
+        );
 
-    if (start > 2) {
-        const dots = document.createElement("span");
-        dots.innerText = "...";
-        pagination.appendChild(dots);
-    }
+        function exportTableToExcel() {
 
-    for (let i = start; i <= end; i++) {
-        btn(i, i, currentPage === i);
-    }
+            const table =
+                document.querySelector("table");
 
-    if (end < totalPages - 1) {
-        const dots = document.createElement("span");
-        dots.innerText = "...";
-        pagination.appendChild(dots);
-    }
+            const wb =
+                XLSX.utils.table_to_book(
+                    table, {
+                        sheet: "Monitoring"
+                    }
+                );
 
-    if (totalPages > 1) {
-        btn(totalPages, totalPages, currentPage === totalPages);
-    }
+            XLSX.writeFile(
+                wb,
+                "monitoring.xlsx"
+            );
 
-    if (currentPage < totalPages) btn("Next", currentPage + 1);
-}
+        }
+    </script>
 
-// INIT
-
-
-function exportTableToExcel() {
-
-// tampilkan semua row
-rows.forEach(row => row.style.display = "");
-
-const table = document.querySelector("table");
-
-const wb = XLSX.utils.table_to_book(table, {
-    sheet: "Monitoring Energy"
-});
-
-const today = new Date();
-
-const fileName =
-    "monitoring_energy_" +
-    today.getFullYear() + "-" +
-    String(today.getMonth() + 1).padStart(2, '0') + "-" +
-    String(today.getDate()).padStart(2, '0') +
-    ".xlsx";
-
-XLSX.writeFile(wb, fileName);
-
-// kembalikan pagination
-showPage(currentPage);
-}
-showPage(1);
-</script>
 </body>
+
 </html>

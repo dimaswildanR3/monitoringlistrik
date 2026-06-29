@@ -1,165 +1,688 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
     <meta charset="UTF-8">
-    <title>Audit Energi Kelistrikan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Evaluasi Audit Energi</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
-        body {
-            font-family: Arial;
-            background: #f4f6f9;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
-        /* ==========================================
-           UPDATE: HEADER DENGAN LOGO YANG SERAGAM
-           ========================================== */
-        .header {
-            background: #2c3e50;
-            padding: 10px 20px;
-            color: white;
+        body {
+            background: #f5f7fb;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+
+            background: #002a72;
+            height: 75px;
+            padding: 0 30px;
             display: flex;
             justify-content: space-between;
-            align-items: center; /* Membuat isi header sejajar vertikal di tengah */
-            flex-wrap: wrap;
+            align-items: center;
+            color: white;
+
         }
 
-        .brand-section {
+        .brand {
+
             display: flex;
             align-items: center;
-            gap: 12px; /* Jarak antara logo PPNS dan tulisan teks */
+            gap: 15px;
+
         }
 
-        .logo-ppns {
-            height: 45px; /* Ukuran tinggi logo PPNS */
-            width: auto;
+        .brand img {
+            height: 40px;
         }
 
-        .menu-section {
+        .brand h2 {
+            font-size: 24px;
+        }
+
+        .menu {
+
             display: flex;
             align-items: center;
-            gap: 15px; /* Jarak antara menu dan logo Himaliskal */
-        }
-
-        .logo-himaliskal {
-            height: 45px; /* Ukuran tinggi logo Himaliskal */
-            width: auto;
-            border-radius: 4px; /* Sudut melengkung halus */
+            gap: 15px;
         }
 
         .menu a {
+
             color: white;
-            margin-left: 15px;
             text-decoration: none;
-            display: inline-block;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
         }
 
+        .active {
+
+            background: #0d5eff;
+
+        }
+
+        .logoRight {
+            height: 45px;
+        }
+
+
+        /* ================= CONTENT ================= */
+
         .container {
-            padding: 30px;
+
+            padding: 25px;
+
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .pageHeader {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+
+        }
+
+        .pageTitle {
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+        }
+
+        .iconHeader {
+
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+
+            font-size: 25px;
+            /* color: #0d5eff; */
+
+        }
+
+        .pageTitle h1 {
+
+            font-size: 35px;
+            color: #0f1f4f;
+
+        }
+
+        .pageTitle p {
+
+            color: #666;
+
+        }
+
+        .online {
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: green;
+            font-weight: bold;
+
+        }
+
+
+        /* ================= FILTER ================= */
+
+        .filterBox {
+
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr) 200px;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, .05);
+
+        }
+
+        .filterItem {
+
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+
+        }
+
+        .filterItem label {
+
+            font-size: 14px;
+            font-weight: bold;
+
+        }
+
+        .filterItem input,
+        .filterItem select {
+
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+        }
+
+        .btnBlue {
+
+            background: #0d5eff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+
+            cursor: pointer;
+            font-weight: bold;
+
+        }
+
+
+        /* ================= CARDS ================= */
+
+        .cardGrid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .card {
+
+            background: white;
+            padding: 20px;
+
+            border-radius: 15px;
+
+            display: flex;
+            gap: 15px;
+            align-items: center;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+
+        }
+
+        .circle {
+
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 28px;
+            font-weight: bold;
+
+            color: white;
+
+        }
+
+        .green {
+            background: #1db954;
+        }
+
+        .blue {
+            background: #2979ff;
+        }
+
+        .orange {
+            background: #ff9800;
+        }
+
+        .red {
+            background: #ff4444;
+        }
+
+        .purple {
+            background: #9c27b0;
+        }
+
+        .card h3 {
+
+            font-size: 32px;
+            margin-top: 5px;
+
+        }
+
+        .card small {
+            color: #666;
+        }
+
+
+        /* ================= MIDDLE ================= */
+
+        .middle {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .box {
+
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+
+        }
+
+        .progress {
+
+            height: 10px;
+            background: #eee;
+            border-radius: 20px;
+
+            margin: 15px 0;
+
+            overflow: hidden;
+
+        }
+
+        .fill {
+
+            height: 100%;
+            background: #1db954;
+
+        }
+
+        .rekomendasi {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #ecfff2;
+
+            border-radius: 10px;
+
+            border: 1px solid #8ed9a6;
+
+        }
+
+
+        /* ================= TABLE ================= */
+
+        .tableCard {
+
+            background: white;
+            padding: 20px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+
+        }
+
+        .tableHeader {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+
         }
 
         table {
+
             width: 100%;
-            background: white;
             border-collapse: collapse;
-            border-radius: 10px;
-            overflow: hidden;
+
         }
 
         th {
-            background: #34495e;
+
+            background: #00144e;
             color: white;
-            padding: 10px;
+            padding: 15px;
+
         }
 
         td {
-            padding: 10px;
+
+            padding: 15px;
             border-bottom: 1px solid #eee;
+
             text-align: center;
+
         }
 
-        .ok { color: green; font-weight: bold; }
-        .bad { color: red; font-weight: bold; }
+        .badge {
+
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+
+        }
+
+        .badgeGreen {
+            background: #eafaf0;
+            color: #1db954;
+        }
+
+        .badgeOrange {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+
+        .badgeRed {
+            background: #ffe9e9;
+            color: red;
+        }
+
+        .buttonArea {
+
+            margin-top: 20px;
+
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+
+        }
+
+        .excelBtn {
+
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+
+            background: #16a34a;
+            color: white;
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+        .downloadBtn {
+
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+
+            background: #0d5eff;
+            color: white;
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
 
         #pagination {
-            margin-top: 15px;
+
+            margin-top: 20px;
             text-align: center;
+
         }
 
         #pagination button {
-            margin: 2px;
-            padding: 5px 10px;
+
+            padding: 8px 12px;
+            margin: 3px;
+
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-            border-radius: 4px;
+
         }
 
-        /* ==========================================
-           RESPONSIVE MODE UNTUK LAYAR HP
-           ========================================== */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
+        .activePage {
 
-            .menu-section {
-                width: 100%;
-                justify-content: space-between; /* Menu kiri, logo kanan di HP */
-                gap: 0;
-            }
+            background: #0d5eff;
+            color: white;
 
-            .menu a {
-                margin-left: 0;
-                margin-right: 15px;
-            }
-
-            .container {
-                padding: 15px;
-            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="header">
-    <div class="brand-section">
-        <img src="https://monitoringppns.com/2.png" alt="Logo PPNS" class="logo-ppns">
-        <span style="font-size: 1.1em; font-weight: bold;">Audit Energi Kelistrikan</span>
-    </div>
+    <div class="topbar">
 
-    <div class="menu-section">
-        <div class="menu">
-            <a href="/">Dashboard</a>
-            <a href="/hasil">Evaluasi</a>
+        <div class="brand">
+
+            <img src="https://monitoringppns.com/2.png">
+
+            <h2>Monitoring Energy IoT</h2>
+
         </div>
-        <img src="https://monitoringppns.com/1.png" alt="Logo Himaliskal" class="logo-himaliskal">
+
+        <div class="menu">
+
+            <a href="/">Dashboard</a>
+
+            <a href="/hasil" class="active">
+                <i class="fa-solid fa-chart-column"></i>
+                Evaluasi
+            </a>
+
+            <img src="https://monitoringppns.com/1.png"
+                class="logoRight">
+
+        </div>
+
     </div>
+
+
+
+    <div class="container">
+
+        <div class="pageHeader">
+
+            <div class="pageTitle">
+
+                <div class="iconHeader">
+                    <i class="fa-solid fa-wave-square"></i>
+                </div>
+
+                <div>
+
+                    <h1>Evaluasi Audit Energi Kelistrikan</h1>
+
+                    <p>
+                        Ringkasan hasil audit kualitas daya
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- <div class="online">
+
+                🟢 Online
+
+            </div> -->
+
+        </div>
+
+
+
+        <!-- <div class="filterBox">
+
+            <div class="filterItem">
+
+                <label>Device</label>
+
+                <select>
+                    <option>device_1</option>
+                </select>
+
+            </div>
+
+            <div class="filterItem">
+
+                <label>Tanggal</label>
+
+                <input type="date">
+
+            </div>
+
+            <div class="filterItem">
+
+                <label>Rentang Waktu</label>
+
+                <select>
+                    <option>60 Menit Terakhir</option>
+                </select>
+
+            </div>
+
+            <button class="btnBlue">
+                Terapkan Filter
+            </button>
+
+        </div> -->
+
+
+        @php
+    $totalData = $data->count();
+    $totalNormal = $data->where('audit', 1)->count();
+    $totalTidakNormal = $data->where('audit', '!=', 1)->count();
+
+    $statusAudit = $totalTidakNormal == 0 ? 'NORMAL' : 'TIDAK NORMAL';
+    $statusColor = $totalTidakNormal == 0 ? 'green' : 'red';
+    $statusIcon = $totalTidakNormal == 0 ? '✓' : '✕';
+@endphp
+<div class="cardGrid">
+
+    <!-- Status Audit -->
+    <div class="card">
+
+        <div class="circle {{ $statusColor }}">
+            {{ $statusIcon }}
+        </div>
+
+        <div>
+            <small>Status Audit</small>
+
+            <h3 style="font-size:24px;white-space:nowrap;">
+                {{ $statusAudit }}
+            </h3>
+        </div>
+
+    </div>
+
+    <!-- Semua Data -->
+    <div class="card">
+
+        <div class="circle blue">
+            <i class="fa-solid fa-database"></i>
+        </div>
+
+        <div>
+
+            <small>Jumlah Semua Data</small>
+
+            <h3>{{ $totalData }}</h3>
+
+        </div>
+
+    </div>
+
+    <!-- Data Normal -->
+    <div class="card">
+
+        <div class="circle green">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div>
+
+            <small>Jumlah Data Normal</small>
+
+            <h3>{{ $totalNormal }}</h3>
+
+        </div>
+
+    </div>
+
+    <!-- Data Tidak Normal -->
+    <div class="card">
+
+        <div class="circle red">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <div>
+
+            <small>Jumlah Tidak Normal</small>
+
+            <h3>{{ $totalTidakNormal }}</h3>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="container">
+        <div class="tableCard">
 
-<div style="margin-bottom:15px;">
-    <button onclick="exportTableToExcel()" 
-        style="
-            background:#27ae60;
-            color:white;
-            border:none;
-            padding:10px 15px;
-            border-radius:6px;
-            cursor:pointer;
-            font-weight:bold;
-        ">
-        📥 Export Excel
-    </button>
-</div>
+            <div class="tableHeader">
 
-<table>
-    <thead>
-        <tr>
-            <th>Device</th>
+                <h2>Hasil Audit Energi</h2>
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                    <th>Device</th>
             <th>Waktu</th>
             <th>THD V</th>
             <th>THD I</th>
@@ -167,12 +690,16 @@
             <th>Deviasi</th>
             <th>Power Factor</th>
             <th>Audit Energi</th>
-        </tr>
-    </thead>
 
-    <tbody id="tableBody">
-    @foreach($data as $d)
-    <tr>
+                    </tr>
+
+                </thead>
+
+                <tbody id="tableBody">
+
+                    @foreach($data as $d)
+
+                  <tr>
         <td>{{ $d->id_device }}</td>
         <td>{{ $d->created_at ? \Carbon\Carbon::parse($d->created_at)->format('d-m-Y H:i:s') : '-' }}</td>
 
@@ -200,114 +727,57 @@
             {{ $d->audit == 1 ? 'NORMAL' : 'TIDAK NORMAL' }}
         </td>
     </tr>
-    @endforeach
-    </tbody>
-</table>
 
-<div id="pagination"></div>
+                    @endforeach
 
-</div>
+                </tbody>
 
-<script>
-function exportTableToExcel() {
-    const table = document.querySelector("table");
-    const clonedTable = table.cloneNode(true);
+            </table>
 
-    const wb = XLSX.utils.table_to_book(clonedTable, {
-        sheet: "Audit Energi"
-    });
 
-    const today = new Date();
-    const fileName =
-        "audit_energi_" +
-        today.getFullYear() + "-" +
-        (today.getMonth() + 1) + "-" +
-        today.getDate() + ".xlsx";
+            <div class="buttonArea">
 
-    XLSX.writeFile(wb, fileName);
-}
+                <button
+                    class="excelBtn"
+                    onclick="exportTableToExcel()">
 
-/* ================= PAGINATION ================= */
+                    Export Excel
 
-const rowsPerPage = 10;
-const tableBody = document.getElementById("tableBody");
-const rows = Array.from(tableBody.querySelectorAll("tr"));
+                </button>
 
-let currentPage = 1;
+                <!-- <button class="downloadBtn">
 
-function getTotalPages() {
-    return Math.ceil(rows.length / rowsPerPage);
-}
+                    Unduh Laporan
 
-function showPage(page) {
-    currentPage = page;
+                </button> -->
 
-    rows.forEach((row, index) => {
-        row.style.display =
-            (index >= (page - 1) * rowsPerPage &&
-             index < page * rowsPerPage)
-            ? ""
-            : "none";
-    });
+            </div>
 
-    renderPagination();
-}
+            <div id="pagination"></div>
 
-function renderPagination() {
-    const pagination = document.getElementById("pagination");
-    pagination.innerHTML = "";
+        </div>
 
-    const totalPages = getTotalPages();
+    </div>
 
-    function btn(label, page, active = false) {
-        const b = document.createElement("button");
-        b.innerText = label;
+    <script>
+        function exportTableToExcel() {
 
-        if (active) {
-            b.style.background = "#2c3e50";
-            b.style.color = "white";
+            const table = document.querySelector("table");
+
+            const wb = XLSX.utils.table_to_book(
+                table, {
+                    sheet: "Audit Energi"
+                }
+            );
+
+            XLSX.writeFile(
+                wb,
+                "audit_energi.xlsx"
+            );
+
         }
-
-        b.onclick = () => showPage(page);
-        pagination.appendChild(b);
-    }
-
-    // Prev
-    if (currentPage > 1) btn("Prev", currentPage - 1);
-
-    // page 1
-    btn(1, 1, currentPage === 1);
-
-    let start = Math.max(2, currentPage - 1);
-    let end = Math.min(totalPages - 1, currentPage + 1);
-
-    if (start > 2) {
-        const dots = document.createElement("span");
-        dots.innerText = "...";
-        pagination.appendChild(dots);
-    }
-
-    for (let i = start; i <= end; i++) {
-        btn(i, i, currentPage === i);
-    }
-
-    if (end < totalPages - 1) {
-        const dots = document.createElement("span");
-        dots.innerText = "...";
-        pagination.appendChild(dots);
-    }
-
-    if (totalPages > 1) {
-        btn(totalPages, totalPages, currentPage === totalPages);
-    }
-
-    // Next
-    if (currentPage < totalPages) btn("Next", currentPage + 1);
-}
-
-// init
-showPage(1);
-</script>
+    </script>
 
 </body>
+
 </html>
