@@ -626,7 +626,7 @@ $lastData = $data->last();
                     ⚠ Deviasi ({{number_format(end($dev),2)}}%)
                 </div>
 
-                <div class="recommend">
+                <!-- <div class="recommend">
 
                     <b>Rekomendasi</b>
 
@@ -638,7 +638,7 @@ $lastData = $data->last();
 
                     </p>
 
-                </div>
+                </div> -->
 
             </div>
 

@@ -215,18 +215,66 @@
 
         /* ================= CARDS ================= */
 
-        .cardGrid {
+     /* pembungkus card */
+.cardWrapper{
+    position:relative;
+    margin-bottom:25px;
+}
 
-            display: grid;
+/* card ditengah */
+.cardGrid{
+    position:relative;
+    z-index:2;
 
-            grid-template-columns:
-                repeat(5, 1fr);
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
 
-            gap: 15px;
+/* card */
+.card{
+    background:white;
+    padding:20px 25px;
+    border-radius:15px;
 
-            margin-bottom: 20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
 
-        }
+    min-width:260px;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+/* shape background kecil */
+.shape{
+    position:absolute;
+    background:#2979ff;
+    opacity:.08;
+    border-radius:15px;
+    z-index:1;
+}
+
+.shape1{
+    width:90px;
+    height:90px;
+
+    top:-15px;
+    left:35%;
+
+    transform:rotate(25deg);
+}
+
+.shape2{
+    width:70px;
+    height:70px;
+
+    right:35%;
+    bottom:-10px;
+
+    transform:rotate(-25deg);
+}
 
         .card {
 
@@ -595,71 +643,42 @@
     $statusColor = $totalTidakNormal == 0 ? 'green' : 'red';
     $statusIcon = $totalTidakNormal == 0 ? '✓' : '✕';
 @endphp
-<div class="cardGrid">
+<div class="cardWrapper">
 
-    <!-- Status Audit -->
-    <div class="card">
+    <!-- shape kecil -->
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
 
-        <div class="circle {{ $statusColor }}">
-            {{ $statusIcon }}
-        </div>
+    <div class="cardGrid">
 
-        <div>
-            <small>Status Audit</small>
+        <!-- Status Audit -->
+        <div class="card">
 
-            <h3 style="font-size:24px;white-space:nowrap;">
-                {{ $statusAudit }}
-            </h3>
-        </div>
+            <div class="circle {{ $statusColor }}">
+                {{ $statusIcon }}
+            </div>
 
-    </div>
+            <div>
+                <small>Status Audit</small>
 
-    <!-- Semua Data -->
-    <div class="card">
-
-        <div class="circle blue">
-            <i class="fa-solid fa-database"></i>
-        </div>
-
-        <div>
-
-            <small>Jumlah Semua Data</small>
-
-            <h3>{{ $totalData }}</h3>
+                <h3 style="font-size:24px;white-space:nowrap;">
+                    {{ $statusAudit }}
+                </h3>
+            </div>
 
         </div>
 
-    </div>
+        <!-- Semua Data -->
+        <div class="card">
 
-    <!-- Data Normal -->
-    <div class="card">
+            <div class="circle blue">
+                <i class="fa-solid fa-database"></i>
+            </div>
 
-        <div class="circle green">
-            <i class="fa-solid fa-circle-check"></i>
-        </div>
-
-        <div>
-
-            <small>Jumlah Data Normal</small>
-
-            <h3>{{ $totalNormal }}</h3>
-
-        </div>
-
-    </div>
-
-    <!-- Data Tidak Normal -->
-    <div class="card">
-
-        <div class="circle red">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-        </div>
-
-        <div>
-
-            <small>Jumlah Tidak Normal</small>
-
-            <h3>{{ $totalTidakNormal }}</h3>
+            <div>
+                <small>Jumlah Semua Data</small>
+                <h3>{{ $totalData }}</h3>
+            </div>
 
         </div>
 
