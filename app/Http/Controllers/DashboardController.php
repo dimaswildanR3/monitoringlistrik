@@ -8,19 +8,21 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        // auto delete data lebih dari 2 hari
-        LogEnergy::where('created_at', '<', now()->subDays(2))->delete();
+   public function index()
+{
+    // Hapus data lebih dari 2 hari
+    LogEnergy::where('created_at', '<', now()->subDays(2))->delete();
 
-        // ambil hanya 2 hari terakhir
-        $data = LogEnergy::whereBetween('created_at', [
+    // Ambil data 2 hari terakhir, urutkan dari terbaru
+    $data = LogEnergy::whereBetween('created_at', [
             now()->subDays(1)->startOfDay(),
             now()->endOfDay()
-        ])->latest()->get();
+        ])
+        ->orderBy('created_at', 'asc')
+        ->get();
 
-        return view('dashboard', compact('data'));
-    }
+    return view('dashboard', compact('data'));
+}
 
     public function hasil()
     {

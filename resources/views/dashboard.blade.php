@@ -340,7 +340,7 @@ foreach($data as $d){
     $dev[]=(float)$d->deviasi;
 }
 
-$lastData = $data->last();
+$lastData = $data->first();
 @endphp
 
 
@@ -611,19 +611,19 @@ $lastData = $data->last();
                 <h2>Hasil Evaluasi Otomatis</h2>
 
                 <div class="eval">
-                    ✓ THD V ({{number_format(end($thdv),2)}}%)
+                 ✓ THD V ({{ number_format(optional($lastData)->thdv ?? 0, 2) }}%)
                 </div>
 
                 <div class="eval">
-                    ✓ THD I ({{number_format(end($thdi),2)}}%)
+                   ✓ THD I ({{ number_format(optional($lastData)->thdi ?? 0, 2) }}%)
                 </div>
 
                 <div class="eval">
-                    ✓ Unbalance ({{number_format(end($unb),2)}}%)
+                   ✓ Unbalance ({{ number_format(optional($lastData)->unbalance ?? 0, 2) }}%)
                 </div>
 
                 <div class="eval">
-                    ⚠ Deviasi ({{number_format(end($dev),2)}}%)
+                   ⚠ Deviasi ({{ number_format(optional($lastData)->deviasi ?? 0, 2) }}%)
                 </div>
 
                 <!-- <div class="recommend">
