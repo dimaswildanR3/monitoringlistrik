@@ -682,7 +682,7 @@
 
 
         @php
-        $totalData = $data->count();
+      
         $totalNormal = $data->where('audit', 1)->count();
         $totalTidakNormal = $data->where('audit', '!=', 1)->count();
 
