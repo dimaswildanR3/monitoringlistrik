@@ -532,6 +532,46 @@
             color: white;
 
         }
+         .pagination-custom{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.pagination-custom a,
+.pagination-custom span{
+    min-width:42px;
+    height:42px;
+    padding:0 15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    text-decoration:none;
+    border:1px solid #d0d7e2;
+    background:#fff;
+    color:#002a72;
+    font-weight:600;
+}
+
+.pagination-custom a:hover{
+    background:#002a72;
+    color:#fff;
+}
+
+.pagination-custom .active{
+    background:#002a72;
+    color:#fff;
+    border-color:#002a72;
+}
+
+.pagination-custom .disabled{
+    color:#999;
+    background:#f3f4f6;
+}
     </style>
 </head>
 
@@ -773,7 +813,33 @@
             </div>
 
             <div id="pagination"></div>
+                   <div style="margin-top:20px;">
+       @if ($data->hasPages())
+<div class="pagination-custom">
 
+    @if ($data->onFirstPage())
+        <span class="disabled">« Previous</span>
+    @else
+        <a href="{{ $data->previousPageUrl() }}">« Previous</a>
+    @endif
+
+    @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
+        @if ($page == $data->currentPage())
+            <span class="active">{{ $page }}</span>
+        @else
+            <a href="{{ $url }}">{{ $page }}</a>
+        @endif
+    @endforeach
+
+    @if ($data->hasMorePages())
+        <a href="{{ $data->nextPageUrl() }}">Next »</a>
+    @else
+        <span class="disabled">Next »</span>
+    @endif
+
+</div>
+@endif
+    </div>
         </div>
 
     </div>
