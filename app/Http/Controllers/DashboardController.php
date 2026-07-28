@@ -18,7 +18,7 @@ class DashboardController extends Controller
             now()->subDays(1)->startOfDay(),
             now()->endOfDay()
         ])
-        ->orderBy('created_at', 'asc')
+        ->orderBy('created_at', 'desc')
         ->get();
 
     return view('dashboard', compact('data'));
