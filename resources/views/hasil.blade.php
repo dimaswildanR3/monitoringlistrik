@@ -716,18 +716,18 @@
                 </div>
 
                 <!-- Semua Data -->
-                <div class="card">
+<div class="card">
 
-                    <div class="circle blue">
-                        <i class="fa-solid fa-database"></i>
-                    </div>
+    <div class="circle blue">
+        <i class="fa-solid fa-database"></i>
+    </div>
 
-                    <div>
-                        <small>Jumlah Semua Data</small>
-                        <h3>{{ $totalData }}</h3>
-                    </div>
+    <div>
+        <small>Jumlah Semua Data</small>
+        <h3>{{ number_format($totalData) }}</h3>
+    </div>
 
-                </div>
+</div>
 
             </div>
 

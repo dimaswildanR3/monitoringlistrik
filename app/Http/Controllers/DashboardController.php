@@ -24,14 +24,21 @@ public function index()
     return view('dashboard', compact('data'));
 }
 
-    public function hasil()
-    {
-        $data = LogEnergy::whereBetween('created_at', [
-            now()->subDays(1)->startOfDay(),
-            now()->endOfDay()
-        ])   ->orderBy('created_at', 'desc')
+   public function hasil()
+{
+    $query = LogEnergy::whereBetween('created_at', [
+        now()->subDays(1)->startOfDay(),
+        now()->endOfDay()
+    ]);
+
+    // Jumlah seluruh data
+    $totalData = (clone $query)->count();
+
+    // Data untuk tabel
+    $data = $query
+        ->orderBy('created_at', 'desc')
         ->paginate(50);
 
-        return view('hasil', compact('data'));
-    }
+    return view('hasil', compact('data', 'totalData'));
+}
 }
