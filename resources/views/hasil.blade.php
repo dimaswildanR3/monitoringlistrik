@@ -215,66 +215,66 @@
 
         /* ================= CARDS ================= */
 
-     /* pembungkus card */
-.cardWrapper{
-    position:relative;
-    margin-bottom:25px;
-}
+        /* pembungkus card */
+        .cardWrapper {
+            position: relative;
+            margin-bottom: 25px;
+        }
 
-/* card ditengah */
-.cardGrid{
-    position:relative;
-    z-index:2;
+        /* card ditengah */
+        .cardGrid {
+            position: relative;
+            z-index: 2;
 
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-}
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-/* card */
-.card{
-    background:white;
-    padding:20px 25px;
-    border-radius:15px;
+        /* card */
+        .card {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 15px;
 
-    display:flex;
-    align-items:center;
-    gap:15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
 
-    min-width:260px;
+            min-width: 260px;
 
-    box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+        }
 
-/* shape background kecil */
-.shape{
-    position:absolute;
-    background:#2979ff;
-    opacity:.08;
-    border-radius:15px;
-    z-index:1;
-}
+        /* shape background kecil */
+        .shape {
+            position: absolute;
+            background: #2979ff;
+            opacity: .08;
+            border-radius: 15px;
+            z-index: 1;
+        }
 
-.shape1{
-    width:90px;
-    height:90px;
+        .shape1 {
+            width: 90px;
+            height: 90px;
 
-    top:-15px;
-    left:35%;
+            top: -15px;
+            left: 35%;
 
-    transform:rotate(25deg);
-}
+            transform: rotate(25deg);
+        }
 
-.shape2{
-    width:70px;
-    height:70px;
+        .shape2 {
+            width: 70px;
+            height: 70px;
 
-    right:35%;
-    bottom:-10px;
+            right: 35%;
+            bottom: -10px;
 
-    transform:rotate(-25deg);
-}
+            transform: rotate(-25deg);
+        }
 
         .card {
 
@@ -532,46 +532,53 @@
             color: white;
 
         }
-         .pagination-custom{
-    margin-top:20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    flex-wrap:wrap;
-}
 
-.pagination-custom a,
-.pagination-custom span{
-    min-width:42px;
-    height:42px;
-    padding:0 15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:10px;
-    text-decoration:none;
-    border:1px solid #d0d7e2;
-    background:#fff;
-    color:#002a72;
-    font-weight:600;
-}
+        .pagination-custom {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
 
-.pagination-custom a:hover{
-    background:#002a72;
-    color:#fff;
-}
+        .pagination-custom a,
+        .pagination-custom span {
+            min-width: 42px;
+            height: 42px;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid #d0d7e2;
+            background: #fff;
+            color: #002a72;
+            font-weight: 600;
+        }
 
-.pagination-custom .active{
-    background:#002a72;
-    color:#fff;
-    border-color:#002a72;
-}
+        .pagination-custom a:hover {
+            background: #002a72;
+            color: #fff;
+        }
 
-.pagination-custom .disabled{
-    color:#999;
-    background:#f3f4f6;
-}
+        .pagination-custom .active {
+            background: #002a72;
+            color: #fff;
+            border-color: #002a72;
+        }
+
+        .pagination-custom .disabled {
+            color: #999;
+            background: #f3f4f6;
+        }
+
+        .pagination-custom .dots {
+            padding: 0 10px;
+            font-weight: bold;
+            color: #666;
+        }
     </style>
 </head>
 
@@ -675,56 +682,56 @@
 
 
         @php
-    $totalData = $data->count();
-    $totalNormal = $data->where('audit', 1)->count();
-    $totalTidakNormal = $data->where('audit', '!=', 1)->count();
+        $totalData = $data->count();
+        $totalNormal = $data->where('audit', 1)->count();
+        $totalTidakNormal = $data->where('audit', '!=', 1)->count();
 
-    $statusAudit = $totalTidakNormal == 0 ? 'NORMAL' : 'TIDAK NORMAL';
-    $statusColor = $totalTidakNormal == 0 ? 'green' : 'red';
-    $statusIcon = $totalTidakNormal == 0 ? '✓' : '✕';
-@endphp
-<div class="cardWrapper">
+        $statusAudit = $totalTidakNormal == 0 ? 'NORMAL' : 'TIDAK NORMAL';
+        $statusColor = $totalTidakNormal == 0 ? 'green' : 'red';
+        $statusIcon = $totalTidakNormal == 0 ? '✓' : '✕';
+        @endphp
+        <div class="cardWrapper">
 
-    <!-- shape kecil -->
-    <div class="shape shape1"></div>
-    <div class="shape shape2"></div>
+            <!-- shape kecil -->
+            <div class="shape shape1"></div>
+            <div class="shape shape2"></div>
 
-    <div class="cardGrid">
+            <div class="cardGrid">
 
-        <!-- Status Audit -->
-        <div class="card">
+                <!-- Status Audit -->
+                <div class="card">
 
-            <div class="circle {{ $statusColor }}">
-                {{ $statusIcon }}
-            </div>
+                    <div class="circle {{ $statusColor }}">
+                        {{ $statusIcon }}
+                    </div>
 
-            <div>
-                <small>Status Audit</small>
+                    <div>
+                        <small>Status Audit</small>
 
-                <h3 style="font-size:24px;white-space:nowrap;">
-                    {{ $statusAudit }}
-                </h3>
+                        <h3 style="font-size:24px;white-space:nowrap;">
+                            {{ $statusAudit }}
+                        </h3>
+                    </div>
+
+                </div>
+
+                <!-- Semua Data -->
+                <div class="card">
+
+                    <div class="circle blue">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+
+                    <div>
+                        <small>Jumlah Semua Data</small>
+                        <h3>{{ $totalData }}</h3>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
-
-        <!-- Semua Data -->
-        <div class="card">
-
-            <div class="circle blue">
-                <i class="fa-solid fa-database"></i>
-            </div>
-
-            <div>
-                <small>Jumlah Semua Data</small>
-                <h3>{{ $totalData }}</h3>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
 
         <div class="tableCard">
 
@@ -741,14 +748,14 @@
 
                     <tr>
 
-                    <th>Device</th>
-            <th>Waktu</th>
-            <th>THD V</th>
-            <th>THD I</th>
-            <th>Unbalance</th>
-            <th>Deviasi</th>
-            <th>Power Factor</th>
-            <th>Audit Energi</th>
+                        <th>Device</th>
+                        <th>Waktu</th>
+                        <th>THD V</th>
+                        <th>THD I</th>
+                        <th>Unbalance</th>
+                        <th>Deviasi</th>
+                        <th>Power Factor</th>
+                        <th>Audit Energi</th>
 
                     </tr>
 
@@ -758,34 +765,34 @@
 
                     @foreach($data as $d)
 
-                  <tr>
-        <td>{{ $d->id_device }}</td>
-        <td>{{ $d->created_at ? \Carbon\Carbon::parse($d->created_at)->format('d-m-Y H:i:s') : '-' }}</td>
+                    <tr>
+                        <td>{{ $d->id_device }}</td>
+                        <td>{{ $d->created_at ? \Carbon\Carbon::parse($d->created_at)->format('d-m-Y H:i:s') : '-' }}</td>
 
-        <td class="{{ $d->status_thdv == 1 ? 'ok' : 'bad' }}">
-            {{ $d->status_thdv == 1 ? 'Standar' : 'Tidak' }}
-        </td>
+                        <td class="{{ $d->status_thdv == 1 ? 'ok' : 'bad' }}">
+                            {{ $d->status_thdv == 1 ? 'Standar' : 'Tidak' }}
+                        </td>
 
-        <td class="{{ $d->status_thdi == 1 ? 'ok' : 'bad' }}">
-            {{ $d->status_thdi == 1 ? 'Standar' : 'Tidak' }}
-        </td>
+                        <td class="{{ $d->status_thdi == 1 ? 'ok' : 'bad' }}">
+                            {{ $d->status_thdi == 1 ? 'Standar' : 'Tidak' }}
+                        </td>
 
-        <td class="{{ $d->status_unbalance == 1 ? 'ok' : 'bad' }}">
-            {{ $d->status_unbalance == 1 ? 'Standar' : 'Tidak' }}
-        </td>
+                        <td class="{{ $d->status_unbalance == 1 ? 'ok' : 'bad' }}">
+                            {{ $d->status_unbalance == 1 ? 'Standar' : 'Tidak' }}
+                        </td>
 
-        <td class="{{ $d->status_deviasi == 1 ? 'ok' : 'bad' }}">
-            {{ $d->status_deviasi == 1 ? 'Standar' : 'Tidak' }}
-        </td>
+                        <td class="{{ $d->status_deviasi == 1 ? 'ok' : 'bad' }}">
+                            {{ $d->status_deviasi == 1 ? 'Standar' : 'Tidak' }}
+                        </td>
 
-        <td class="{{ $d->status_pf == 1 ? 'ok' : 'bad' }}">
-            {{ $d->status_pf == 1 ? 'Standar' : 'Tidak' }}
-        </td>
+                        <td class="{{ $d->status_pf == 1 ? 'ok' : 'bad' }}">
+                            {{ $d->status_pf == 1 ? 'Standar' : 'Tidak' }}
+                        </td>
 
-        <td class="{{ $d->audit == 1 ? 'ok' : 'bad' }}">
-            {{ $d->audit == 1 ? 'NORMAL' : 'TIDAK NORMAL' }}
-        </td>
-    </tr>
+                        <td class="{{ $d->audit == 1 ? 'ok' : 'bad' }}">
+                            {{ $d->audit == 1 ? 'NORMAL' : 'TIDAK NORMAL' }}
+                        </td>
+                    </tr>
 
                     @endforeach
 
@@ -813,24 +820,48 @@
             </div>
 
             <div id="pagination"></div>
-                   <div style="margin-top:20px;">
-       @if ($data->hasPages())
+           @if ($data->hasPages())
 <div class="pagination-custom">
 
+    {{-- Previous --}}
     @if ($data->onFirstPage())
         <span class="disabled">« Previous</span>
     @else
         <a href="{{ $data->previousPageUrl() }}">« Previous</a>
     @endif
 
-    @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
-        @if ($page == $data->currentPage())
+    {{-- Halaman pertama --}}
+    @if($data->currentPage() > 3)
+        <a href="{{ $data->url(1) }}">1</a>
+
+        @if($data->currentPage() > 4)
+            <span class="dots">...</span>
+        @endif
+    @endif
+
+    {{-- Halaman sekitar current --}}
+    @foreach(range(max(1, $data->currentPage()-1), min($data->lastPage(), $data->currentPage()+1)) as $page)
+        @if($page == $data->currentPage())
             <span class="active">{{ $page }}</span>
         @else
-            <a href="{{ $url }}">{{ $page }}</a>
+            <a href="{{ $data->url($page) }}">{{ $page }}</a>
         @endif
     @endforeach
 
+    {{-- Halaman terakhir --}}
+    @if($data->currentPage() < $data->lastPage()-2)
+
+        @if($data->currentPage() < $data->lastPage()-3)
+            <span class="dots">...</span>
+        @endif
+
+        <a href="{{ $data->url($data->lastPage()) }}">
+            {{ $data->lastPage() }}
+        </a>
+
+    @endif
+
+    {{-- Next --}}
     @if ($data->hasMorePages())
         <a href="{{ $data->nextPageUrl() }}">Next »</a>
     @else
@@ -839,7 +870,6 @@
 
 </div>
 @endif
-    </div>
         </div>
 
     </div>

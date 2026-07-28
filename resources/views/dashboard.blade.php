@@ -11,51 +11,52 @@
     <style>
         /* TABLE RESPONSIVE */
 
-.tableContainer{
-    width:100%;
-    overflow-x:auto;
-    overflow-y:hidden;
-    border-radius:10px;
-    margin-top:15px;
-}
+        .tableContainer {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
 
-.tableContainer::-webkit-scrollbar{
-    height:8px;
-}
+        .tableContainer::-webkit-scrollbar {
+            height: 8px;
+        }
 
-.tableContainer::-webkit-scrollbar-thumb{
-    background:#cbd5e1;
-    border-radius:10px;
-}
+        .tableContainer::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
 
-table{
-    width:100%;
-    min-width:1400px;
-    border-collapse:collapse;
-    white-space:nowrap;
-}
+        table {
+            width: 100%;
+            min-width: 1400px;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
 
-thead{
-    position:sticky;
-    top:0;
-    z-index:2;
-}
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
 
-th{
-    background:#002a72;
-    color:white;
-    padding:12px;
-}
+        th {
+            background: #002a72;
+            color: white;
+            padding: 12px;
+        }
 
-td{
-    padding:10px;
-    border-bottom:1px solid #eee;
-    text-align:center;
-}
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
 
-tr:hover{
-    background:#f8fafc;
-}
+        tr:hover {
+            background: #f8fafc;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -130,7 +131,7 @@ tr:hover{
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 15px;
-margin-bottom: 10px;
+            margin-bottom: 10px;
         }
 
         .statusCard {
@@ -305,45 +306,50 @@ margin-bottom: 10px;
 
         }
 
-        .pagination-custom{
-    margin-top:20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    flex-wrap:wrap;
-}
+        .pagination-custom {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
 
-.pagination-custom a,
-.pagination-custom span{
-    min-width:42px;
-    height:42px;
-    padding:0 15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:10px;
-    text-decoration:none;
-    border:1px solid #d0d7e2;
-    background:#fff;
-    color:#002a72;
-    font-weight:600;
-}
+        .pagination-custom a,
+        .pagination-custom span {
+            min-width: 42px;
+            height: 42px;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid #d0d7e2;
+            background: #fff;
+            color: #002a72;
+            font-weight: 600;
+        }
 
-.pagination-custom a:hover{
-    background:#002a72;
-    color:#fff;
-}
+        .pagination-custom a:hover {
+            background: #002a72;
+            color: #fff;
+        }
 
-.pagination-custom .active{
-    background:#002a72;
-    color:#fff;
-    border-color:#002a72;
-}
+        .pagination-custom .active {
+            background: #002a72;
+            color: #fff;
+            border-color: #002a72;
+        }
 
-.pagination-custom .disabled{
-    color:#999;
-    background:#f3f4f6;
+        .pagination-custom .disabled {
+            color: #999;
+            background: #f3f4f6;
+        }
+        .pagination-custom .dots{
+    padding:0 10px;
+    font-weight:bold;
+    color:#666;
 }
 
         @media(max-width:1000px) {
@@ -365,24 +371,24 @@ margin-bottom: 10px;
 </head>
 
 <body>
-@php
-$labels=[];$thdv=[];$thdi=[];
-$unb=[];$dev=[];
+    @php
+    $labels=[];$thdv=[];$thdi=[];
+    $unb=[];$dev=[];
 
-foreach($data as $d){
+    foreach($data as $d){
 
     $labels[]=\Carbon\Carbon::parse(
-        $d->waktu_log
+    $d->waktu_log
     )->format('H:i');
 
     $thdv[]=(float)$d->thdv;
     $thdi[]=(float)$d->thdi;
     $unb[]=(float)$d->unbalance;
     $dev[]=(float)$d->deviasi;
-}
+    }
 
-$lastData = $data->first();
-@endphp
+    $lastData = $data->first();
+    @endphp
 
 
     <div class="header">
@@ -439,97 +445,97 @@ $lastData = $data->first();
 
 
         <div class="statusGrid">
-        <div class="statusCard">
-    <div class="iconCircle 
+            <div class="statusCard">
+                <div class="iconCircle 
         {{ isset($lastData) ? ($lastData->audit == 1 ? 'greenBg' : 'redBg') : 'grayBg' }}">
-        ⚡
-    </div>
+                    ⚡
+                </div>
 
-    <div class="statusContent">
-        <div>Status Sistem</div>
+                <div class="statusContent">
+                    <div>Status Sistem</div>
 
-        <div class="big 
+                    <div class="big 
             {{ isset($lastData) ? ($lastData->audit == 1 ? 'green' : 'red') : 'gray' }}">
-            
-            {{ isset($lastData)
+
+                        {{ isset($lastData)
                 ? ($lastData->audit == 1 ? 'NORMAL' : 'TIDAK NORMAL')
                 : 'DATA KOSONG' }}
-        </div>
+                    </div>
 
-        <span class="badge 
+                    <span class="badge 
             {{ isset($lastData) ? ($lastData->audit == 1 ? 'badgeGreen' : 'badgeRed') : 'badgeGray' }}">
-            
-            {{ isset($lastData)
+
+                        {{ isset($lastData)
                 ? ($lastData->audit == 1 ? 'Normal' : 'Tidak Normal')
                 : 'Belum ada data' }}
-        </span>
-    </div>
-</div>
+                    </span>
+                </div>
+            </div>
 
-<style>
-.statusCard{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
+            <style>
+                .statusCard {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                }
 
-.statusContent{
-    min-width:0;
-}
+                .statusContent {
+                    min-width: 0;
+                }
 
-.big{
-    white-space:nowrap;
-    font-weight:bold;
-}
+                .big {
+                    white-space: nowrap;
+                    font-weight: bold;
+                }
 
-.badge{
-    white-space:nowrap;
-}
+                .badge {
+                    white-space: nowrap;
+                }
 
-.green{
-    color:#22c55e;
-}
+                .green {
+                    color: #22c55e;
+                }
 
-.red{
-    color:#ef4444;
-}
-</style>
+                .red {
+                    color: #ef4444;
+                }
+            </style>
 
-<div class="statusCard">
-    <div class="iconCircle blueBg">
-        T%
-    </div>
+            <div class="statusCard">
+                <div class="iconCircle blueBg">
+                    T%
+                </div>
 
-    <div>
-        <div>THD V</div>
+                <div>
+                    <div>THD V</div>
 
-        <div class="big blue">
-            {{ number_format(optional($lastData)->thdv ?? 0, 2) }}
-        </div>
+                    <div class="big blue">
+                        {{ number_format(optional($lastData)->thdv ?? 0, 2) }}
+                    </div>
 
-        <span class="badge 
+                    <span class="badge 
         {{ optional($lastData)->status_thdv == 1 ? 'badgeGreen' : 'badgeRed' }}">
-        
-            {{ optional($lastData)->status_thdv == 1 
+
+                        {{ optional($lastData)->status_thdv == 1 
                 ? 'Standar' 
                 : 'Belum ada data' }}
-                
-        </span>
-    </div>
-</div>
-<div class="statusCard">
-    <div class="iconCircle greenBg">
-        ⚡
-    </div>
 
-    <div>
-        <div>THD I</div>
+                    </span>
+                </div>
+            </div>
+            <div class="statusCard">
+                <div class="iconCircle greenBg">
+                    ⚡
+                </div>
 
-        <div class="big green">
-            {{ number_format(optional($lastData)->thdi ?? 0, 2) }}
-        </div>
+                <div>
+                    <div>THD I</div>
 
-        <span class="badge
+                    <div class="big green">
+                        {{ number_format(optional($lastData)->thdi ?? 0, 2) }}
+                    </div>
+
+                    <span class="badge
         {{
             is_null(optional($lastData)->status_thdi)
             ? 'badgeGray'
@@ -537,31 +543,31 @@ $lastData = $data->first();
                 ? 'badgeGreen'
                 : 'badgeRed')
         }}">
-            {{
+                        {{
                 is_null(optional($lastData)->status_thdi)
                 ? 'Belum ada data'
                 : (optional($lastData)->status_thdi == 1
                     ? 'Standar'
                     : 'Tidak')
             }}
-        </span>
-    </div>
-</div>
+                    </span>
+                </div>
+            </div>
 
 
-<div class="statusCard">
-    <div class="iconCircle orangeBg">
-        ⚖️
-    </div>
+            <div class="statusCard">
+                <div class="iconCircle orangeBg">
+                    ⚖️
+                </div>
 
-    <div>
-        <div>Unbalance</div>
+                <div>
+                    <div>Unbalance</div>
 
-        <div class="big orange">
-            {{ number_format(optional($lastData)->unbalance ?? 0, 2) }}
-        </div>
+                    <div class="big orange">
+                        {{ number_format(optional($lastData)->unbalance ?? 0, 2) }}
+                    </div>
 
-        <span class="badge
+                    <span class="badge
         {{
             is_null(optional($lastData)->status_unbalance)
             ? 'badgeGray'
@@ -569,31 +575,31 @@ $lastData = $data->first();
                 ? 'badgeGreen'
                 : 'badgeRed')
         }}">
-            {{
+                        {{
                 is_null(optional($lastData)->status_unbalance)
                 ? 'Belum ada data'
                 : (optional($lastData)->status_unbalance == 1
                     ? 'Standar'
                     : 'Tidak')
             }}
-        </span>
-    </div>
-</div>
+                    </span>
+                </div>
+            </div>
 
 
-<div class="statusCard">
-    <div class="iconCircle redBg">
-        Δ
-    </div>
+            <div class="statusCard">
+                <div class="iconCircle redBg">
+                    Δ
+                </div>
 
-    <div>
-        <div>Deviasi</div>
+                <div>
+                    <div>Deviasi</div>
 
-        <div class="big red">
-            {{ number_format(optional($lastData)->deviasi ?? 0, 2) }}
-        </div>
+                    <div class="big red">
+                        {{ number_format(optional($lastData)->deviasi ?? 0, 2) }}
+                    </div>
 
-        <span class="badge
+                    <span class="badge
         {{
             is_null(optional($lastData)->status_deviasi)
             ? 'badgeGray'
@@ -601,18 +607,18 @@ $lastData = $data->first();
                 ? 'badgeGreen'
                 : 'badgeRed')
         }}">
-            {{
+                        {{
                 is_null(optional($lastData)->status_deviasi)
                 ? 'Belum ada data'
                 : (optional($lastData)->status_deviasi == 1
                     ? 'Standar'
                     : 'Tidak')
             }}
-        </span>
-    </div>
-</div>
+                    </span>
+                </div>
+            </div>
 
-</div>
+        </div>
 
 
 
@@ -652,19 +658,19 @@ $lastData = $data->first();
                 <h2>Hasil Evaluasi Otomatis</h2>
 
                 <div class="eval">
-                 ✓ THD V ({{ number_format(optional($lastData)->thdv ?? 0, 2) }}%)
+                    ✓ THD V ({{ number_format(optional($lastData)->thdv ?? 0, 2) }}%)
                 </div>
 
                 <div class="eval">
-                   ✓ THD I ({{ number_format(optional($lastData)->thdi ?? 0, 2) }}%)
+                    ✓ THD I ({{ number_format(optional($lastData)->thdi ?? 0, 2) }}%)
                 </div>
 
                 <div class="eval">
-                   ✓ Unbalance ({{ number_format(optional($lastData)->unbalance ?? 0, 2) }}%)
+                    ✓ Unbalance ({{ number_format(optional($lastData)->unbalance ?? 0, 2) }}%)
                 </div>
 
                 <div class="eval">
-                   ⚠ Deviasi ({{ number_format(optional($lastData)->deviasi ?? 0, 2) }}%)
+                    ⚠ Deviasi ({{ number_format(optional($lastData)->deviasi ?? 0, 2) }}%)
                 </div>
 
                 <!-- <div class="recommend">
@@ -701,81 +707,111 @@ $lastData = $data->first();
 
             <div class="tableContainer">
 
-            <table>
+                <table>
 
-                <thead>
+                    <thead>
 
-                <tr>
-            <th>Device</th>
-            <th>IR</th><th>IS</th><th>IT</th>
-            <th>VRN</th><th>VSN</th><th>VTN</th>
-            <th>VRS</th><th>VST</th><th>VTR</th>
-            <th>V Mean</th>
-            <!-- <th>Power (kW)</th> -->
-            <th>Energy (kWh)</th>
-            <th>THD V</th>
-            <th>THD I</th>
-            <th>Freq</th>
-            <th>Unbalance</th>
-            <th>Deviasi</th>
-            <th>PF</th>
-            <th>Waktu</th>
-        </tr>
+                        <tr>
+                            <th>Device</th>
+                            <th>IR</th>
+                            <th>IS</th>
+                            <th>IT</th>
+                            <th>VRN</th>
+                            <th>VSN</th>
+                            <th>VTN</th>
+                            <th>VRS</th>
+                            <th>VST</th>
+                            <th>VTR</th>
+                            <th>V Mean</th>
+                            <!-- <th>Power (kW)</th> -->
+                            <th>Energy (kWh)</th>
+                            <th>THD V</th>
+                            <th>THD I</th>
+                            <th>Freq</th>
+                            <th>Unbalance</th>
+                            <th>Deviasi</th>
+                            <th>PF</th>
+                            <th>Waktu</th>
+                        </tr>
 
-                </thead>
+                    </thead>
 
-                <tbody id="tableBody">
+                    <tbody id="tableBody">
 
-                    @foreach($data as $d)
+                        @foreach($data as $d)
 
-                    <tr>
-            <td>{{ $d->id_device }}</td>
-            <td>{{ number_format($d->ir,2) }}</td>
-            <td>{{ number_format($d->is,2) }}</td>
-            <td>{{ number_format($d->it,2) }}</td>
-            <td>{{ number_format($d->vrn,2) }}</td>
-            <td>{{ number_format($d->vsn,2) }}</td>
-            <td>{{ number_format($d->vtn,2) }}</td>
-            <td>{{ number_format($d->vrs,2) }}</td>
-            <td>{{ number_format($d->vst,2) }}</td>
-            <td>{{ number_format($d->vtr,2) }}</td>
-            <td>{{ number_format($d->vmean,2) }}</td>
-            <!-- <td>{{ number_format($d->pw,2) }}</td> -->
-            <td>{{ number_format($d->ener,2) }}</td>
-            <td>{{ number_format($d->thdv ?? 0,2) }}%</td>
-            <td>{{ number_format($d->thdi ?? 0,2) }}%</td>
-            <td>{{ number_format($d->freq,2) }}</td>
-            <td>{{ number_format($d->unbalance,2) }}%</td>
-            <td>{{ number_format($d->deviasi,2) }}%</td>
-            <td>{{ number_format($d->pf,2) }}</td>
-            <td>{{ \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i:s') }}</td>
-        </tr>
+                        <tr>
+                            <td>{{ $d->id_device }}</td>
+                            <td>{{ number_format($d->ir,2) }}</td>
+                            <td>{{ number_format($d->is,2) }}</td>
+                            <td>{{ number_format($d->it,2) }}</td>
+                            <td>{{ number_format($d->vrn,2) }}</td>
+                            <td>{{ number_format($d->vsn,2) }}</td>
+                            <td>{{ number_format($d->vtn,2) }}</td>
+                            <td>{{ number_format($d->vrs,2) }}</td>
+                            <td>{{ number_format($d->vst,2) }}</td>
+                            <td>{{ number_format($d->vtr,2) }}</td>
+                            <td>{{ number_format($d->vmean,2) }}</td>
+                            <!-- <td>{{ number_format($d->pw,2) }}</td> -->
+                            <td>{{ number_format($d->ener,2) }}</td>
+                            <td>{{ number_format($d->thdv ?? 0,2) }}%</td>
+                            <td>{{ number_format($d->thdi ?? 0,2) }}%</td>
+                            <td>{{ number_format($d->freq,2) }}</td>
+                            <td>{{ number_format($d->unbalance,2) }}%</td>
+                            <td>{{ number_format($d->deviasi,2) }}%</td>
+                            <td>{{ number_format($d->pf,2) }}</td>
+                            <td>{{ \Carbon\Carbon::parse($d->waktu_log)->format('d-m-Y H:i:s') }}</td>
+                        </tr>
 
-                    @endforeach
+                        @endforeach
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
 
             </div>
-                         <div style="margin-top:20px;">
-       @if ($data->hasPages())
+          @if ($data->hasPages())
 <div class="pagination-custom">
 
+    {{-- Previous --}}
     @if ($data->onFirstPage())
         <span class="disabled">« Previous</span>
     @else
         <a href="{{ $data->previousPageUrl() }}">« Previous</a>
     @endif
 
-    @foreach ($data->getUrlRange(1, $data->lastPage()) as $page => $url)
-        @if ($page == $data->currentPage())
+    {{-- Halaman pertama --}}
+    @if($data->currentPage() > 3)
+        <a href="{{ $data->url(1) }}">1</a>
+
+        @if($data->currentPage() > 4)
+            <span class="dots">...</span>
+        @endif
+    @endif
+
+    {{-- Halaman sekitar current --}}
+    @foreach(range(max(1, $data->currentPage()-1), min($data->lastPage(), $data->currentPage()+1)) as $page)
+        @if($page == $data->currentPage())
             <span class="active">{{ $page }}</span>
         @else
-            <a href="{{ $url }}">{{ $page }}</a>
+            <a href="{{ $data->url($page) }}">{{ $page }}</a>
         @endif
     @endforeach
 
+    {{-- Halaman terakhir --}}
+    @if($data->currentPage() < $data->lastPage()-2)
+
+        @if($data->currentPage() < $data->lastPage()-3)
+            <span class="dots">...</span>
+        @endif
+
+        <a href="{{ $data->url($data->lastPage()) }}">
+            {{ $data->lastPage() }}
+        </a>
+
+    @endif
+
+    {{-- Next --}}
     @if ($data->hasMorePages())
         <a href="{{ $data->nextPageUrl() }}">Next »</a>
     @else
@@ -784,7 +820,6 @@ $lastData = $data->first();
 
 </div>
 @endif
-    </div>
         </div>
 
     </div>
